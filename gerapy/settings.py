@@ -8,8 +8,6 @@ MYSQL_USERNAME = config('mysql', 'username')
 MYSQL_PASSWORD = config('mysql', 'password')
 MYSQL_CHARSET = config('mysql', 'charset')
 
-print(MYSQL_HOST, MYSQL_DATABASE)
-
 
 BOT_NAME = 'Gerapy'
 

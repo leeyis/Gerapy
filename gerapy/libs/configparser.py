@@ -1,10 +1,13 @@
 import configparser
-import os
+from os.path import *
 
-cwd = os.getcwd()
+cwd = dirname(dirname(dirname(abspath(__file__))))
+
 
 cf = configparser.ConfigParser()
-cf.read(cwd + '/../gerapy.cfg')
+cfg_path = cwd + '/gerapy.cfg'
+cf.read(cfg_path)
+
 
 def config(section, option):
     return cf.get(section, option)
