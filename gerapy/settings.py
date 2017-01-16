@@ -13,7 +13,6 @@ print(MYSQL_HOST, MYSQL_DATABASE)
 
 BOT_NAME = 'Gerapy'
 
-
 # Enables scheduling storing requests queue in redis.
 SCHEDULER = "scrapy_redis.scheduler.Scheduler"
 
@@ -25,6 +24,16 @@ ITEM_PIPELINES = {
     'scrapy_redis.pipelines.RedisPipeline': 300
 }
 
+# Redis configuration
 REDIS_HOST = config('redis', 'host')
 REDIS_PORT = config('redis', 'port')
 REDIS_PASSWORD = config('redis', 'password')
+
+
+# MongoDB configuration
+MONGODB_HOST = config('mongodb', 'host')
+MONGODB_PORT = config('mongodb', 'port')
+MONGODB_PASSWORD = config('mongodb', 'password')
+MONGODB_DATABASE = config('mongodb', 'database')
+MONGODB_SHEET = config('mongodb', 'sheet')
+
