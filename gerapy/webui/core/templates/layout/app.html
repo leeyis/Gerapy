@@ -6,22 +6,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=0.7">
     <meta name="renderer" content="webkit">
     <meta http-equiv="Cache-Control" content="no-siteapp"/>
+    {% load static from staticfiles %}
     <title>Gerapy</title>
     <!--[if lt IE 8]>
     <meta http-equiv="refresh" content="0;ie.html"/>
     <![endif]-->
 
     <link rel="shortcut icon" href="/favicon.ico">
-    <link rel="stylesheet" href="/css/common/bootstrap.min.css'">
-    <link rel="stylesheet" href="/css/plugins/font-awesome/font-awesome.min.css'">
-    <link rel="stylesheet" href="/css/common/iconfont.css'">
-    <link rel="stylesheet" href="/css/common/animate.min.css'">
-    <link rel="stylesheet" href="/css/common/hplus.css'">
-    <link rel="stylesheet" href="/css/manage/manage.css'">
-    <script src="/js/common/jquery.min.js'"></script>
-    <script src="/js/common/bootstrap.min.js'"></script>
-    <script src="/js/common/manage.function.js'"></script>
-    <script src="/js/common/hwby.function.js'"></script>
+    <link rel="stylesheet" href="{% static '/css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static '/css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static '/css/animate.min.css' %}">
+    <link rel="stylesheet" href="{% static '/css/hplus.css' %}">
+    <script src="{% static '/js/jquery.min.js' %}"></script>
+    <script src="{% static '/js/bootstrap.min.js' %}"></script>
 
 </head>
 <body class="fixed-sidebar full-height-layout gray-bg" style="overflow:hidden">
@@ -29,14 +26,13 @@
 {% block 'wrap' %}
 {% endblock %}
 {% include 'public/options.html' %}
-<script src="/js/common/content.min.js'"></script>
-<script src="/js/plugins/metisMenu/jquery.metisMenu.js'"></script>
-<script src="/js/plugins/slimscroll/jquery.slimscroll.min.js'"></script>
-<script src="/js/plugins/layer/layer.min.js'"></script>
-<script src="/js/common/hplus.min.js'"></script>
-<script src="/js/common/contabs.min.js'"></script>
-<script src="/js/plugins/pace/pace.min.js'"></script>
-<script src="/js/common/manage.js'"></script>
+<script src="{% static '/js/content.min.js' %}"></script>
+<script src="{% static '/js/jquery.metisMenu.js' %}"></script>
+<script src="{% static '/js/jquery.slimscroll.min.js' %}"></script>
+<script src="{% static '/js/layer/layer.min.js' %}"></script>
+<script src="{% static '/js/hplus.min.js' %}"></script>
+<script src="{% static '/js/contabs.min.js' %}"></script>
+<script src="{% static '/js/pace.min.js' %}"></script>
 </body>
 
 </html>

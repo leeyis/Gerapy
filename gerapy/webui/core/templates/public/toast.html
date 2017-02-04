@@ -1,6 +1,8 @@
 <div id="toast">
-    <link rel="stylesheet" href="/css/plugins/toastr/toastr.min.css">
-    <script src="/js/plugins/toastr/toastr.min.js'"></script>
+    {% load static from staticfiles %}
+
+    <link rel="stylesheet" href="{% static '/css/toastr.min.css' %}">
+    <script src="{% static '/js/toastr.min.js' %}"></script>
     <script>
         toastr.options = {
             "closeButton": true,
