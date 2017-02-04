@@ -1,0 +1,110 @@
+{% extends 'public/wrap.html' %}
+
+{% block 'main' %}
+<div class="wrapper wrapper-content">
+    <div class="row animated fadeInDown">
+        <div class="col-sm-3">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>{{ $category->display_name }}</h5>
+
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <h3>{{ $category->name }}
+                        <small>{{ $category->display_name }}</small>
+                    </h3>
+                    <p>
+                        <i class="fa fa-magic"></i>
+                        描述<br> {{ $category->description }}
+                    </p>
+
+                    <p>
+                        <i class="fa fa-clock-o"></i>
+                        创建时间<br> {{ $category->created_at }}
+                    </p>
+                </div>
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>个性管理</h5>
+
+                </div>
+                <div class="ibox-content">
+                    {!! Form::model($category, ['url' => url('/manage/category/'.$category->id), 'class' =>
+                    'form-horizontal', 'id' => 'category-form', 'method' => 'PUT']) !!}
+                    <div class="form-group">
+                        <div class="col-md-12">
+                            {!! Form::file('upload', ['id' => 'category-banner-img', 'class' => 'uploadify']) !!}
+                            {!! Form::hidden('banner', null) !!}
+                            <img src="" class="pre-view"/>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12 text-center">
+                            {!! Form::submit('保存', ['class' => 'btn btn-primary btn-xs']) !!}
+                        </div>
+                    </div>
+                    {!! Form::close() !!}
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-9">
+            <div class="ibox animate">
+                <div class="ibox-title">
+                    <h5>修改类别</h5>
+
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {!! Form::model($category, ['url' => url('/manage/category/'.$category->id), 'class' =>
+                            'form-horizontal', 'id' => 'category-form', 'method' => 'PUT']) !!}
+                            <div class="form-group">
+                                <label for="name" class="col-sm-2 control-label">类别名称</label>
+
+                                <div class="col-sm-10">
+                                    {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => '类别名称'])
+                                    !!}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="display_name" class="col-sm-2 control-label">显示名称</label>
+
+                                <div class="col-sm-10">
+                                    {!! Form::text('display_name', null, ['class' => 'form-control', 'placeholder' =>
+                                    '显示名称']) !!}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="description" class="col-sm-2 control-label">类别描述</label>
+
+                                <div class="col-sm-10">
+                                    {!! Form::textarea('description', null, ['class' => 'form-control', 'placeholder' =>
+                                    '类别描述']) !!}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-10 col-sm-offset-2">
+                                    {!! Form::submit('保存', ['class' => 'btn btn-primary']) !!}
+                                </div>
+                            </div>
+                            {!! Form::close() !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
