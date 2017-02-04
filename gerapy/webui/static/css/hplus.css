@@ -2733,10 +2733,11 @@ a.forum-item-title:hover {
     overflow: hidden;
     position: fixed;
     top: 60px;
-    width: 260px !important;
+    width: 200px !important;
+    height: 148px;
     z-index: 1009;
     bottom: 0;
-    right: -260px
+    right: -200px;
 }
 
 #right-sidebar.sidebar-open {
@@ -2868,10 +2869,6 @@ body, body.full-height-layout #page-wrapper, body.full-height-layout #wrapper, h
 
 #page-wrapper {
     min-height: auto
-}
-
-body.boxed-layout {
-    background: url(../images/shattered.png)
 }
 
 body.boxed-layout #wrapper {
