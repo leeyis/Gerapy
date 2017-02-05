@@ -27,13 +27,8 @@ def client(request, id):
         client = Client.objects.filter(id=id)
         data = request.POST.dict()
         client.update(**data)
-        return HttpResponseRedirect(reverse('client_edit', args=[id]))
+        return HttpResponseRedirect(reverse('client', args=[id]))
 
-def client_edit(request, id):
-    client = Client.objects.get(id=id)
-    return render(request, 'client/edit.html', {
-        'client': client
-    })
 
 
 def spiders(request):
