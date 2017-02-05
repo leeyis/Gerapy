@@ -77,5 +77,6 @@ def project_edit(request, id):
 def project_pack(request, id):
     project = Project.objects.get(id=id)
     create_project(project)
-    check_project(project)
-    return HttpResponse('success')
+    if check_project(project):
+        return HttpResponse('1')
+    return HttpResponse('0')

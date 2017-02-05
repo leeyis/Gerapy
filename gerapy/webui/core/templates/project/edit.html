@@ -183,7 +183,9 @@
                 method: 'post',
                 url: $(this).data('url'),
                 success: function (data) {
-                    console.log(data)
+                    if (data) {
+                        alert('生成成功!', 'success')
+                    }
                 }
             })
         })
