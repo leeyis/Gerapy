@@ -314,7 +314,6 @@ div.CodeMirror span.CodeMirror-nonmatchingbracket {
 .CodeMirror-hscrollbar {
     bottom: 0;
     left: 0;
-    overflow-y: hidden;
 }
 
 .CodeMirror-scrollbar-filler {

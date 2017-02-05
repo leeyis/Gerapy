@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, HttpResponse
 from .models import Project, Client
 
 
@@ -66,3 +66,8 @@ def project_edit(request, id):
     return render(request, 'project/edit.html', {
         'project': project
     })
+
+
+def project_pack(request, id):
+    project = Project.objects.get(id=id)
+    return HttpResponse('success')

@@ -61,12 +61,29 @@
                     </div>
                 </form>
             </div>
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>打包生成</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group form-group-sm">
+                                <div class="col-sm-12 text-center">
+                                    <input type="button" class="btn btn-primary btn-sm" id="pack" value="打包"
+                                           data-url="{% url 'project_pack' project.id %}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="col-sm-9">
             <div class="ibox animate">
                 <form class="form-horizontal" action="{% url 'project' project.id %}" method="post">
                     <div class="ibox-title">
-                        <h5>Project Class</h5>
+                        <h5>Spiders Class</h5>
 
                         <div class="ibox-tools">
                             <input type="submit" class="btn btn-primary btn-xs" value="保存">
@@ -75,7 +92,7 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <textarea id="code" name="code">{{ project.code }}</textarea>
+                                <textarea id="spiders" name="spiders">{{ project.spiders }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -99,6 +116,42 @@
                     </div>
                 </form>
             </div>
+            <div class="ibox animate">
+                <form class="form-horizontal" action="{% url 'project' project.id %}" method="post">
+                    <div class="ibox-title">
+                        <h5>Items Class</h5>
+
+                        <div class="ibox-tools">
+                            <input type="submit" class="btn btn-primary btn-xs" value="保存">
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <textarea id="items" name="items">{{ project.items }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="ibox animate">
+                <form class="form-horizontal" action="{% url 'project' project.id %}" method="post">
+                    <div class="ibox-title">
+                        <h5>Pipelines Class</h5>
+
+                        <div class="ibox-tools">
+                            <input type="submit" class="btn btn-primary btn-xs" value="保存">
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <textarea id="pipelines" name="pipelines">{{ project.pipelines }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -109,18 +162,31 @@
 <script src="{% static '/js/codemirror.js' %}"></script>
 <script src="{% static '/js/codemirror.mode.js' %}"></script>
 <script>
-    $(document).ready(function () {
+    $(function () {
+        console.log('sdfsdf');
         let config = {
             lineNumbers: true,
             matchBrackets: true,
             styleActiveLine: true,
             tabSize: 4
         }
-        let code = CodeMirror.fromTextArea(document.getElementById("code"), config)
-        code.setSize('100%', '200px')
+        let spiders = CodeMirror.fromTextArea(document.getElementById("spiders"), config)
+        spiders.setSize('100%', '200px')
         let settings = CodeMirror.fromTextArea(document.getElementById("settings"), config)
-        code.setSize('100%', '200px')
-
+        settings.setSize('100%', '200px')
+        let items = CodeMirror.fromTextArea(document.getElementById("items"), config)
+        items.setSize('100%', '200px')
+        let pipelines = CodeMirror.fromTextArea(document.getElementById("pipelines"), config)
+        pipelines.setSize('100%', '200px')
+        $('#pack').on('click', function () {
+            $.ajax({
+                method: 'post',
+                url: $(this).data('url'),
+                success: function (data) {
+                    console.log(data)
+                }
+            })
+        })
     });
 </script>
 {% endblock %}
