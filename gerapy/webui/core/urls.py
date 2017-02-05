@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'^projects/$', views.projects, name='projects'),
     url(r'^project/(\d+)/$', views.project, name='project'),
     url(r'^project/(\d+)/edit/$', views.project_edit, name='project_edit'),
+    url(r'^project/create/$', views.project_create, name='project_create'),
 ]

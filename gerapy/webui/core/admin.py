@@ -1,14 +1,14 @@
 from django.contrib import admin
-from .models import Client, Spider
+from .models import Client, Project
 
 
 class ClientAdmin(admin.ModelAdmin):
-    list_display = ('name', 'ip', 'created_at')
+    list_display = ('name', 'ip', 'port', 'created_at')
 
 
-class SpiderAdmin(admin.ModelAdmin):
+class ProjectAdmin(admin.ModelAdmin):
     list_display = ('name', 'created_at')
 
 
 admin.site.register(Client, ClientAdmin)
-admin.site.register(Spider, SpiderAdmin)
+admin.site.register(Project, ProjectAdmin)

@@ -1,13 +1,12 @@
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect
-from .models import Spider, Client
+from .models import Project, Client
 
 
 def index(request):
-    latest_question_list = Spider.objects.all()
+    latest_question_list = Project.objects.all()
     return render(request, 'index.html')
-
 
 
 def clients(request):
@@ -30,28 +29,34 @@ def client(request, id):
         return HttpResponseRedirect(reverse('client', args=[id]))
 
 
-
 def projects(request):
-    projects = Spider.objects.all()
+    projects = Project.objects.order_by('-id')
     return render(request, 'project/index.html', {
         'projects': projects
     })
 
 
+def project_create(request):
+    if request.method == 'POST':
+        Project.objects.create(**request.POST.dict())
+    return HttpResponseRedirect(reverse('projects'))
+
+
 def project(request, id):
     if request.method == 'GET':
-        project = Spider.objects.get(id=id)
+        project = Project.objects.get(id=id)
         return render(request, 'project/show.html', {
             'project': project
         })
     elif request.method == 'POST':
-        project = Spider.objects.filter(id=id)
+        project = Project.objects.filter(id=id)
         data = request.POST.dict()
         project.update(**data)
         return HttpResponseRedirect(reverse('project_edit', args=[id]))
 
+
 def project_edit(request, id):
-    project = Spider.objects.get(id=id)
+    project = Project.objects.get(id=id)
     return render(request, 'project/edit.html', {
         'project': project
     })
