@@ -2,7 +2,7 @@ import os
 from os import chdir
 from os.path import dirname, exists, abspath
 
-from .updateproject import update_project
+from .update_project import update_project
 
 
 def create_project(project):

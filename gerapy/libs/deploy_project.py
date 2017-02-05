@@ -16,8 +16,7 @@ def deploy_project(project):
     return False
 
 
-
-#!/usr/bin/env python
+# !/usr/bin/env python
 
 import sys
 import os
@@ -36,7 +35,7 @@ from six.moves.urllib.parse import urlparse, urljoin
 from subprocess import Popen, PIPE, check_call
 
 from w3lib.form import encode_multipart
-import setuptools # not used in code but needed in runtime, don't remove!
+import setuptools  # not used in code but needed in runtime, don't remove!
 
 from scrapy.utils.project import inside_project
 from scrapy.utils.http import basic_auth_header
@@ -44,37 +43,39 @@ from scrapy.utils.python import retry_on_eintr
 from scrapy.utils.conf import get_config, closest_scrapy_cfg
 
 _SETUP_PY_TEMPLATE = \
-"""# Automatically created by: scrapyd-deploy
+    """# Automatically created by: scrapyd-deploy
 
-from setuptools import setup, find_packages
+    from setuptools import setup, find_packages
 
-setup(
-    name         = 'project',
-    version      = '1.0',
-    packages     = find_packages(),
-    entry_points = {'scrapy': ['settings = %(settings)s']},
-)
-"""
+    setup(
+        name         = 'project',
+        version      = '1.0',
+        packages     = find_packages(),
+        entry_points = {'scrapy': ['settings = %(settings)s']},
+    )
+    """
+
 
 def parse_opts():
     parser = OptionParser(usage="%prog [options] [ [target] | -l | -L <target> ]",
-        description="Deploy Scrapy project to Scrapyd server")
+                          description="Deploy Scrapy project to Scrapyd server")
     parser.add_option("-p", "--project",
-        help="the project name in the target")
+                      help="the project name in the target")
     parser.add_option("-v", "--version",
-        help="the version to deploy. Defaults to current timestamp")
+                      help="the version to deploy. Defaults to current timestamp")
     parser.add_option("-l", "--list-targets", action="store_true", \
-        help="list available targets")
-    parser.add_option("-a", "--deploy-all-targets",action="store_true", help="deploy all targets")
+                      help="list available targets")
+    parser.add_option("-a", "--deploy-all-targets", action="store_true", help="deploy all targets")
     parser.add_option("-d", "--debug", action="store_true",
-        help="debug mode (do not remove build dir)")
+                      help="debug mode (do not remove build dir)")
     parser.add_option("-L", "--list-projects", metavar="TARGET", \
-        help="list available projects on TARGET")
+                      help="list available projects on TARGET")
     parser.add_option("--egg", metavar="FILE",
-        help="use the given egg, instead of building it")
+                      help="use the given egg, instead of building it")
     parser.add_option("--build-egg", metavar="FILE",
-        help="only build the egg, don't deploy it")
+                      help="only build the egg, don't deploy it")
     return parser.parse_args()
+
 
 def main():
     opts, args = parse_opts()
@@ -103,7 +104,7 @@ def main():
 
     tmpdir = None
 
-    if opts.build_egg: # build egg only
+    if opts.build_egg:  # build egg only
         egg, tmpdir = _build_egg()
         _log("Writing egg to %s" % opts.build_egg)
         shutil.copyfile(egg, opts.build_egg)
@@ -113,7 +114,7 @@ def main():
             if version is None:
                 version = _get_version(target, opts)
             _build_egg_and_deploy_target(target, version, opts)
-    else: # buld egg and deploy
+    else:  # buld egg and deploy
         target_name = _get_target_name(args)
         target = _get_target(target_name)
         version = _get_version(target, opts)
@@ -126,6 +127,7 @@ def main():
             shutil.rmtree(tmpdir)
 
     sys.exit(exitcode)
+
 
 def _build_egg_and_deploy_target(target, version, opts):
     exitcode = 0
@@ -142,12 +144,15 @@ def _build_egg_and_deploy_target(target, version, opts):
         exitcode = 1
     return exitcode, tmpdir
 
+
 def _log(message):
     sys.stderr.write(message + os.linesep)
+
 
 def _fail(message, code=1):
     _log(message)
     sys.exit(code)
+
 
 def _get_target_name(args):
     if len(args) > 1:
@@ -157,16 +162,19 @@ def _get_target_name(args):
     elif len(args) < 1:
         return 'default'
 
+
 def _get_project(target, opts):
     project = opts.project or target.get('project')
     if not project:
         raise _fail("Error: Missing project")
     return project
 
+
 def _get_option(section, option, default=None):
     cfg = get_config()
     return cfg.get(section, option) if cfg.has_option(section, option) \
         else default
+
 
 def _get_targets():
     cfg = get_config()
@@ -181,14 +189,17 @@ def _get_targets():
             targets[x[7:]] = t
     return targets
 
+
 def _get_target(name):
     try:
         return _get_targets()[name]
     except KeyError:
         raise _fail("Unknown target: %s" % name)
 
+
 def _url(target, action):
     return urljoin(target['url'], action)
+
 
 def _get_version(target, opts):
     version = opts.version or target.get('version')
@@ -213,6 +224,7 @@ def _get_version(target, opts):
     else:
         return str(int(time.time()))
 
+
 def _upload_egg(target, eggpath, project, version):
     with open(eggpath, 'rb') as f:
         eggdata = f.read()
@@ -232,17 +244,19 @@ def _upload_egg(target, eggpath, project, version):
     _log('Deploying to project "%s" in %s' % (project, url))
     return _http_post(req)
 
+
 def _add_auth_header(request, target):
     if 'username' in target:
         u, p = target.get('username'), target.get('password', '')
         request.add_header('Authorization', basic_auth_header(u, p))
-    else: # try netrc
+    else:  # try netrc
         try:
             host = urlparse(target['url']).hostname
             a = netrc.netrc().authenticators(host)
             request.add_header('Authorization', basic_auth_header(a[0], a[2]))
         except (netrc.NetrcParseError, IOError, TypeError):
             pass
+
 
 def _http_post(request):
     try:
@@ -266,6 +280,7 @@ def _http_post(request):
     except URLError as e:
         _log("Deploy failed: %s" % e)
 
+
 def _build_egg():
     closest = closest_scrapy_cfg()
     os.chdir(os.path.dirname(closest))
@@ -281,28 +296,28 @@ def _build_egg():
     egg = glob.glob(os.path.join(d, '*.egg'))[0]
     return egg, d
 
+
 def _create_default_setup_py(**kwargs):
     with open('setup.py', 'w') as f:
         f.write(_SETUP_PY_TEMPLATE % kwargs)
 
 
 class HTTPRedirectHandler(UrllibHTTPRedirectHandler):
-
     def redirect_request(self, req, fp, code, msg, headers, newurl):
         newurl = newurl.replace(' ', '%20')
         if code in (301, 307):
             return Request(newurl,
-                                   data=req.get_data(),
-                                   headers=req.headers,
-                                   origin_req_host=req.get_origin_req_host(),
-                                   unverifiable=True)
+                           data=req.get_data(),
+                           headers=req.headers,
+                           origin_req_host=req.get_origin_req_host(),
+                           unverifiable=True)
         elif code in (302, 303):
             newheaders = dict((k, v) for k, v in req.headers.items()
                               if k.lower() not in ("content-length", "content-type"))
             return Request(newurl,
-                                   headers=newheaders,
-                                   origin_req_host=req.get_origin_req_host(),
-                                   unverifiable=True)
+                           headers=newheaders,
+                           origin_req_host=req.get_origin_req_host(),
+                           unverifiable=True)
         else:
             raise HTTPError(req.get_full_url(), code, msg, headers, fp)
 

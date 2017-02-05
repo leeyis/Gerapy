@@ -5,8 +5,8 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
 
-from gerapy.libs.checkproject import check_project
-from gerapy.libs.createproject import create_project
+from gerapy.libs.check_project import check_project
+from gerapy.libs.create_project import create_project
 from .models import Project, Client
 
 

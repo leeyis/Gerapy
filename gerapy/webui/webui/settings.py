@@ -18,7 +18,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 sys.path.append(os.path.dirname(os.path.dirname(BASE_DIR)))
 
-from gerapy.libs.configparser import config
+from gerapy.libs.config_parser import config
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/

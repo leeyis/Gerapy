@@ -1,4 +1,4 @@
-from gerapy.libs.configparser import config
+from gerapy.libs.config_parser import config
 
 
 MYSQL_HOST = config('mysql', 'host')
