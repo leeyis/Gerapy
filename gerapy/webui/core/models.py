@@ -5,8 +5,11 @@ from requests.exceptions import ConnectionError, InvalidURL
 
 class Project(Model):
     name = CharField(max_length=255, default=None)
-    code = TextField(default='', blank=True)
+    description = CharField(max_length=255, default=None, blank=True)
+    spiders = TextField(default='', blank=True)
     settings = TextField(default='', blank=True)
+    items = TextField(default='', blank=True)
+    pipelines = TextField(default='', blank=True)
     created_at = DateTimeField(auto_now_add=True)
     updated_at = DateTimeField(auto_now=True)
 

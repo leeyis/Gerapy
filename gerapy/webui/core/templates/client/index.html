@@ -1,73 +1,117 @@
 {% extends 'public/wrap.html' %}
 
 {% block 'main' %}
-    <div class="wrapper wrapper-content animated fadeInUp">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>所有主机</h5>
-                        
-                        <div class="ibox-tools">
-                            <a href="" class="btn btn-xs btn-primary">增加</a>
+<div class="wrapper wrapper-content animated fadeInUp">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h5>所有主机</h5>
+
+                    <div class="ibox-tools">
+                        <a data-toggle="modal" class="btn btn-primary btn-xs" href="#create-client">新增</a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row m-b-sm m-t-sm">
+                        <div class="col-md-1">
+                            <button type="button" class="btn btn-white btn-sm btn-refresh"><i
+                                    class="fa fa-refresh"></i> 刷新
+                            </button>
+                        </div>
+                        <div class="col-md-11">
+                            <div class="input-group">
+                                <input type="text" placeholder="输入名称搜索" class="input-sm form-control"> <span
+                                    class="input-group-btn">
+                                        <button type="button" class="btn btn-sm btn-primary"> 搜索</button> </span>
+                            </div>
                         </div>
                     </div>
-                    <div class="ibox-content">
-                        <div class="row m-b-sm m-t-sm">
-                            <div class="col-md-1">
-                                <button type="button" class="btn btn-white btn-sm btn-refresh"><i
-                                            class="fa fa-refresh"></i> 刷新
-                                </button>
-                            </div>
-                            <div class="col-md-11">
-                                <div class="input-group">
-                                    <input type="text" placeholder="输入名称搜索" class="input-sm form-control"> <span
-                                            class="input-group-btn">
-                                        <button type="button" class="btn btn-sm btn-primary"> 搜索</button> </span>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="project-list">
-                            <table class="table table-hover">
-                                <tbody>
-                                {% for client in clients %}
-                                    <tr>
-                                        <td class="project-status">
+
+                    <div class="project-list">
+                        <table class="table table-hover">
+                            <tbody>
+                            {% for client in clients %}
+                            <tr>
+                                <td class="project-status">
                                             <span class="label label-{{ client.status.class }}">
                                                 {{ client.status.text }}
                                             </span>
-                                        </td>
-                                        <td class="project-title">
-                                            <small>
-                                                {{ client.name }}
-                                            </small>
-                                        </td>
-                                        <td class="project-completion">
-                                            <small>
-                                                {{ client.ip }}
-                                            </small>
-                                        </td>
-                                        <td class="project-people">
-                                        
-                                        </td>
-                                        <td class="project-actions">
+                                </td>
+                                <td class="project-title">
+                                    <small>
+                                        {{ client.name }}
+                                    </small>
+                                </td>
+                                <td class="project-completion">
+                                    <small>
+                                        {{ client.ip }}
+                                    </small>
+                                </td>
+                                <td class="project-people">
 
-                                            <a href="{% url 'client' client.id %}"
-                                               class="btn btn-primary btn-xs"><i
-                                                        class="fa fa-angle-double-right"></i> 管理 </a>
-                                        </td>
-                                    </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                            <div class="pagination pull-right">
+                                </td>
+                                <td class="project-actions">
 
-                            </div>
+                                    <a href="{% url 'client' client.id %}"
+                                       class="btn btn-primary btn-xs"><i
+                                            class="fa fa-angle-double-right"></i> 管理 </a>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                        <div class="pagination pull-right">
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
+
+<div id="create-client" class="modal fade in" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 p-b-sm">
+                        <h3 class="m-t-none m-b">新增主机</h3>
+                        <div class="hr-line-dashed"></div>
+
+                        <form role="form" method="post" action="{% url 'client_create' %}" class="form-horizontal">
+                            <div class="form-group form-group-sm">
+                                <label class="control-label col-sm-2">主机名</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="name" placeholder="主机名" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">
+                                <label class="control-label col-sm-2">IP</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="ip" placeholder="IP地址" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group form-group-sm">
+                                <label class="control-label col-sm-2">端口</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="port" placeholder="端口（不填默认8600）" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group-sm">
+                                <div class="col-sm-2 col-sm-offset-2 p-l-xs">
+                                    <button class="btn btn-sm btn-primary" type="submit">
+                                        创建
+                                    </button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}

@@ -7358,3 +7358,7 @@ body.skin-3 {
 .none {
     display: none;
 }
+
+#content-main {
+    overflow-y: auto;
+}

@@ -10,7 +10,7 @@ def index(request):
 
 
 def clients(request):
-    clients = Client.objects.all()
+    clients = Client.objects.order_by('-id')
     return render(request, 'client/index.html', {
         'clients': clients
     })
@@ -27,6 +27,12 @@ def client(request, id):
         data = request.POST.dict()
         client.update(**data)
         return HttpResponseRedirect(reverse('client', args=[id]))
+
+
+def client_create(request):
+    if request.method == 'POST':
+        Client.objects.create(**request.POST.dict())
+    return HttpResponseRedirect(reverse('clients'))
 
 
 def projects(request):
