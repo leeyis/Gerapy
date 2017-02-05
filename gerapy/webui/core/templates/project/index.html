@@ -6,7 +6,7 @@
             <div class="col-sm-12">
                 <div class="ibox">
                     <div class="ibox-title">
-                        <h5>所有主机</h5>
+                        <h5>所有爬虫项目</h5>
                         
                         <div class="ibox-tools">
                             <a href="" class="btn btn-xs btn-primary">增加</a>
@@ -31,19 +31,19 @@
                         <div class="project-list">
                             <table class="table table-hover">
                                 <tbody>
-                                {% for spider in spiders %}
+                                {% for project in projects %}
                                     <tr>
                                         <td class="project-status">
                                             <span class="label label-primary">正常</span>
                                         </td>
                                         <td class="project-title">
                                             <small>
-                                                {{ spider.name }}
+                                                {{ project.name }}
                                             </small>
                                         </td>
                                         <td class="project-completion">
                                             <small>
-                                                {{ spider.ip }}
+                                                {{ project.ip }}
                                             </small>
                                         </td>
                                         <td class="project-people">
@@ -51,11 +51,11 @@
                                         </td>
                                         <td class="project-actions">
 
-                                            <a href="{% url 'spider_edit' spider.id %}"
+                                            <a href="{% url 'project_edit' project.id %}"
                                                class="btn btn-primary btn-xs"><i
                                                         class="fa fa-angle-double-right"></i> 编辑 </a>
 
-                                            <a href="{% url 'spider' spider.id %}"
+                                            <a href="{% url 'project' project.id %}"
                                                class="btn btn-white btn-xs"><i
                                                         class="fa fa-angle-double-right"></i> 详情 </a>
                                         </td>

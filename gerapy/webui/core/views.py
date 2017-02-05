@@ -31,27 +31,27 @@ def client(request, id):
 
 
 
-def spiders(request):
-    spiders = Spider.objects.all()
-    return render(request, 'spider/index.html', {
-        'spiders': spiders
+def projects(request):
+    projects = Spider.objects.all()
+    return render(request, 'project/index.html', {
+        'projects': projects
     })
 
 
-def spider(request, id):
+def project(request, id):
     if request.method == 'GET':
-        spider = Spider.objects.get(id=id)
-        return render(request, 'spider/show.html', {
-            'spider': spider
+        project = Spider.objects.get(id=id)
+        return render(request, 'project/show.html', {
+            'project': project
         })
     elif request.method == 'POST':
-        spider = Spider.objects.filter(id=id)
+        project = Spider.objects.filter(id=id)
         data = request.POST.dict()
-        spider.update(**data)
-        return HttpResponseRedirect(reverse('spider_edit', args=[id]))
+        project.update(**data)
+        return HttpResponseRedirect(reverse('project_edit', args=[id]))
 
-def spider_edit(request, id):
-    spider = Spider.objects.get(id=id)
-    return render(request, 'spider/edit.html', {
-        'spider': spider
+def project_edit(request, id):
+    project = Spider.objects.get(id=id)
+    return render(request, 'project/edit.html', {
+        'project': project
     })

@@ -6,7 +6,7 @@ urlpatterns = [
     url(r'^$', views.index, name='index'),
     url(r'^clients/$', views.clients, name='clients'),
     url(r'^client/(\d+)/$', views.client, name='client'),
-    url(r'^spiders/$', views.spiders, name='spiders'),
-    url(r'^spider/(\d+)/$', views.spider, name='spider'),
-    url(r'^spider/(\d+)/edit/$', views.spider_edit, name='spider_edit'),
+    url(r'^projects/$', views.projects, name='projects'),
+    url(r'^project/(\d+)/$', views.project, name='project'),
+    url(r'^project/(\d+)/edit/$', views.project_edit, name='project_edit'),
 ]

@@ -6,7 +6,7 @@
         <div class="col-sm-3">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5>{{ spider.name }}
+                    <h5>{{ project.name }}
                     </h5>
 
                     <div class="ibox-tools">
@@ -20,19 +20,19 @@
                         <i class="fa fa-magic"></i>
                         描述
                     </p>
-                    <p>{{ spider.description }}</p>
+                    <p>{{ project.description }}</p>
 
                     <p class="m-b-xs">
                         <i class="fa fa-clock-o"></i>
                         创建时间
                     </p>
                     <p>
-                        {{ spider.created_at }}
+                        {{ project.created_at }}
                     </p>
                 </div>
             </div>
             <div class="ibox">
-                <form class="form-horizontal" action="{% url 'spider' spider.id %}" method="post">
+                <form class="form-horizontal" action="{% url 'project' project.id %}" method="post">
 
                     <div class="ibox-title">
                         <h5>基本信息</h5>
@@ -46,7 +46,7 @@
                                 <div class="form-group form-group-sm">
                                     <div class="col-sm-12">
                                         <input type="text" class="form-control" name="name" placeholder="主机名"
-                                               value="{{ spider.name }}">
+                                               value="{{ project.name }}">
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +57,7 @@
         </div>
         <div class="col-sm-9">
             <div class="ibox animate">
-                <form class="form-horizontal" action="{% url 'spider' spider.id %}" method="post">
+                <form class="form-horizontal" action="{% url 'project' project.id %}" method="post">
                     <div class="ibox-title">
                         <h5>Spider Class</h5>
 
@@ -68,14 +68,14 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <textarea id="code" name="code">{{ spider.code }}</textarea>
+                                <textarea id="code" name="code">{{ project.code }}</textarea>
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="ibox animate">
-                <form class="form-horizontal" action="{% url 'spider' spider.id %}" method="post">
+                <form class="form-horizontal" action="{% url 'project' project.id %}" method="post">
                     <div class="ibox-title">
                         <h5>Settings</h5>
 
@@ -86,7 +86,7 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
-                                <textarea id="settings" name="settings">{{ spider.settings }}</textarea>
+                                <textarea id="settings" name="settings">{{ project.settings }}</textarea>
                             </div>
                         </div>
                     </div>
