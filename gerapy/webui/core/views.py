@@ -1,6 +1,12 @@
+import os
+import subprocess
+
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse
+
+from gerapy.libs.checkproject import check_project
+from gerapy.libs.createproject import create_project
 from .models import Project, Client
 
 
@@ -70,4 +76,6 @@ def project_edit(request, id):
 
 def project_pack(request, id):
     project = Project.objects.get(id=id)
+    create_project(project)
+    check_project(project)
     return HttpResponse('success')
