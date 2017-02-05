@@ -1,0 +1,27 @@
+<tr>
+    <td class="project-status">
+        {% if job.status == 'pending' %}
+        <span class="label label-warning">等待中</span>
+        {% elif job.status == 'running' %}
+        <span class="label label-success">运行中</span>
+        {% elif job.status == 'finished' %}
+        <span class="label label-primary">已完成</span>
+        {% endif%}
+    </td>
+    <td class="project-title">
+        <small>
+            {{ job.spider }}
+        </small>
+    </td>
+    <td class="project-title">
+        <small>
+            {{ job.start_time|slice:'19' }} - {{ job.end_time|slice:'19' }}
+        </small>
+    </td>
+    <td class="project-actions">
+
+        <a href=""
+           class="btn btn-white btn-xs"><i
+                class="fa fa-angle-double-right"></i> 详情 </a>
+    </td>
+</tr>
