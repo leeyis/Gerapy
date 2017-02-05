@@ -34,3 +34,29 @@ def client_edit(request, id):
     return render(request, 'client/edit.html', {
         'client': client
     })
+
+
+def spiders(request):
+    spiders = Spider.objects.all()
+    return render(request, 'spider/index.html', {
+        'spiders': spiders
+    })
+
+
+def spider(request, id):
+    if request.method == 'GET':
+        spider = Spider.objects.get(id=id)
+        return render(request, 'spider/show.html', {
+            'spider': spider
+        })
+    elif request.method == 'POST':
+        spider = Spider.objects.filter(id=id)
+        data = request.POST.dict()
+        spider.update(**data)
+        return HttpResponseRedirect(reverse('spider_edit', args=[id]))
+
+def spider_edit(request, id):
+    spider = Spider.objects.get(id=id)
+    return render(request, 'spider/edit.html', {
+        'spider': spider
+    })

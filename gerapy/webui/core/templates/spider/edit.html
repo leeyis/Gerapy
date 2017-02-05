@@ -6,8 +6,7 @@
         <div class="col-sm-3">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5>{{ client.name }}
-                        <small>{{ client.ip }}</small>
+                    <h5>{{ spider.name }}
                     </h5>
 
                     <div class="ibox-tools">
@@ -21,19 +20,19 @@
                         <i class="fa fa-magic"></i>
                         描述
                     </p>
-                    <p>{{ client.description }}</p>
+                    <p>{{ spider.description }}</p>
 
                     <p class="m-b-xs">
                         <i class="fa fa-clock-o"></i>
                         创建时间
                     </p>
                     <p>
-                        {{ client.created_at }}
+                        {{ spider.created_at }}
                     </p>
                 </div>
             </div>
             <div class="ibox">
-                <form class="form-horizontal" action="{% url 'client' client.id %}" method="post">
+                <form class="form-horizontal" action="{% url 'spider' spider.id %}" method="post">
 
                     <div class="ibox-title">
                         <h5>基本信息</h5>
@@ -47,13 +46,7 @@
                                 <div class="form-group form-group-sm">
                                     <div class="col-sm-12">
                                         <input type="text" class="form-control" name="name" placeholder="主机名"
-                                               value="{{ client.name }}">
-                                    </div>
-                                </div>
-                                <div class="form-group form-group-sm">
-                                    <div class="col-sm-12">
-                                        <input type="text" class="form-control" name="ip" placeholder="IP"
-                                               value="{{ client.ip }}">
+                                               value="{{ spider.name }}">
                                     </div>
                                 </div>
                             </div>
@@ -64,9 +57,9 @@
         </div>
         <div class="col-sm-9">
             <div class="ibox animate">
-                <form class="form-horizontal" action="{% url 'client' client.id %}" method="post">
+                <form class="form-horizontal" action="{% url 'spider' spider.id %}" method="post">
                     <div class="ibox-title">
-                        <h5>代码</h5>
+                        <h5>Spider Class</h5>
 
                         <div class="ibox-tools">
                             <input type="submit" class="btn btn-primary btn-xs" value="保存">
@@ -75,7 +68,25 @@
                     <div class="ibox-content">
                         <div class="row">
                             <div class="col-sm-12">
-                            <textarea id="code" name="code">{{ client.code }}</textarea>
+                                <textarea id="code" name="code">{{ spider.code }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="ibox animate">
+                <form class="form-horizontal" action="{% url 'spider' spider.id %}" method="post">
+                    <div class="ibox-title">
+                        <h5>Settings</h5>
+
+                        <div class="ibox-tools">
+                            <input type="submit" class="btn btn-primary btn-xs" value="保存">
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <textarea id="settings" name="settings">{{ spider.settings }}</textarea>
                             </div>
                         </div>
                     </div>
@@ -92,13 +103,17 @@
 <script src="{% static '/js/codemirror.mode.js' %}"></script>
 <script>
     $(document).ready(function () {
-
-        var code = CodeMirror.fromTextArea(document.getElementById("code"), {
+        let config = {
             lineNumbers: true,
             matchBrackets: true,
             styleActiveLine: true,
             tabSize: 4
-        })
+        }
+        let code = CodeMirror.fromTextArea(document.getElementById("code"), config)
+        code.setSize('100%', '200px')
+        let settings = CodeMirror.fromTextArea(document.getElementById("settings"), config)
+        code.setSize('100%', '200px')
+
     });
 </script>
 {% endblock %}
