@@ -34,11 +34,31 @@
             </div>
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5>个性管理</h5>
+                    <h5>基本信息</h5>
 
                 </div>
                 <div class="ibox-content">
-
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <form class="form-horizontal" action="{% url 'client' client.id %}" method="post">
+                                <div class="form-group form-group-sm">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="name" placeholder="主机名" value="{{ client.name }}">
+                                    </div>
+                                </div>
+                                <div class="form-group form-group-sm">
+                                    <div class="col-sm-12">
+                                        <input type="text" class="form-control" name="ip" placeholder="IP" value="{{ client.ip }}">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12 text-center">
+                                        <input type="submit" class="btn btn-primary btn-sm" value="保存">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -57,7 +77,14 @@
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-sm-12">
-
+                            <form>
+                                <div class="form-group">
+                                    <label for="name" class="col-sm-2"></label>
+                                    <div class="col-sm-10">
+                                        <input type="text" id="name" name="name" placeholder="主机名">
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
