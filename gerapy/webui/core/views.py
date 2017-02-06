@@ -7,6 +7,7 @@ from django.http import HttpResponseRedirect, HttpResponse
 
 from gerapy.libs.check_project import check_project
 from gerapy.libs.create_project import create_project
+from gerapy.libs.deploy_project import deploy_project
 from .models import Project, Client
 
 
@@ -76,7 +77,8 @@ def project_edit(request, id):
 
 def project_pack(request, id):
     project = Project.objects.get(id=id)
-    create_project(project)
+    #create_project(project)
+    deploy_project(project)
     if check_project(project):
         return HttpResponse('1')
     return HttpResponse('0')
