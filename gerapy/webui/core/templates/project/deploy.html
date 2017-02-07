@@ -78,13 +78,13 @@
                                         <td class="project-actions">
                                             {% if client.connection.symbol %}
                                             {% if client.deployed %}
-                                            <a href="{% url 'client' client.id %}"
-                                               class="btn btn-primary btn-xs"><i
-                                                    class="fa fa-angle-double-right"></i> 重新部署 </a>
+                                            <a data-url="{% url 'client' client.id %}"
+                                               class="btn btn-primary btn-xs re-deploy">
+                                                <i class="fa fa-angle-double-right"></i> 重新部署 </a>
                                             {% else %}
-                                            <a href="{% url 'client' client.id %}"
+                                            <a data-url="{% url 'client' client.id %}"
                                                class="btn btn-primary btn-xs"><i
-                                                    class="fa fa-angle-double-right"></i> 部署 </a>
+                                                    class="fa fa-angle-double-right deploy"></i> 部署 </a>
                                             {% endif %}
                                             {% else %}
                                             <a href="{% url 'client' client.id %}"
@@ -145,6 +145,25 @@
                 }.bind(this));
             }
         }
+    })
+    $(function () {
+        function ajax(btn) {
+            axios.post(btn.data('url')
+            ).then(function (response) {
+                console.log(response.data)
+            }).catch(function (error) {
+                alert('部署失败，请稍后重试', 'error')
+            })
+        }
+        $('.re-deploy').on('click', function () {
+            let btn = $(this)
+            swalert('确定要重新部署吗？', 'warning', function () {
+                ajax(btn)
+            })
+        })
+        $('.deploy').on('click', function () {
+            ajax($(this))
+        })
     })
 </script>
 {% endblock %}
