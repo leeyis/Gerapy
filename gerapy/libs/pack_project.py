@@ -17,16 +17,13 @@ def pack_project(project):
 
 
 _SETUP_PY_TEMPLATE = \
-    """
-# Automatically created by: gerapy
-
+    """# Automatically created by: gerapy
 from setuptools import setup, find_packages
-
 setup(
-    name         = '%(project)s',
-    version      = '1.0',
-    packages     = find_packages(),
-    entry_points = {'scrapy': ['settings = %(settings)s']},
+    name='%(project)s',
+    version='1.0',
+    packages=find_packages(),
+    entry_points={'scrapy':['settings=%(settings)s']},
 )"""
 
 

@@ -39,7 +39,7 @@
 
         </div>
         <div class="col-sm-9">
-            <div class="ibox animate">
+            <div class="ibox animate" id="deploy-box">
                 <div class="ibox-title">
                     <h5>部署状态</h5>
 
@@ -55,6 +55,13 @@
                             <div class="project-list">
                                 <table class="table table-hover">
                                     <tbody>
+                                    <tr>
+                                        <th>主机状态</th>
+                                        <th>主机名称</th>
+                                        <th>主机IP</th>
+                                        <th>包版本</th>
+                                        <th class="text-right">操作</th>
+                                    </tr>
                                     {% for client in clients %}
                                     <tr>
                                         <td class="project-status">
@@ -72,19 +79,22 @@
                                                 {{ client.ip }}
                                             </small>
                                         </td>
-                                        <td class="project-people">
-
+                                        {% load version %}
+                                        <td class="project-version">
+                                            {{ client|version:project.name}}
                                         </td>
                                         <td class="project-actions">
                                             {% if client.connection.symbol %}
                                             {% if client.deployed %}
-                                            <a data-url="{% url 'client' client.id %}"
+                                            <a data-url="{% url 'project_deploy' project.id client.id %}"
                                                class="btn btn-primary btn-xs re-deploy">
-                                                <i class="fa fa-angle-double-right"></i> 重新部署 </a>
+                                                <i class="fa fa-angle-double-right"></i>
+                                                <span>重新部署</span>
+                                            </a>
                                             {% else %}
-                                            <a data-url="{% url 'client' client.id %}"
-                                               class="btn btn-primary btn-xs"><i
-                                                    class="fa fa-angle-double-right deploy"></i> 部署 </a>
+                                            <a data-url="{% url 'project_deploy' project.id client.id %}"
+                                               class="btn btn-primary btn-xs deploy"><i
+                                                    class="fa fa-angle-double-right"></i> 部署 </a>
                                             {% endif %}
                                             {% else %}
                                             <a href="{% url 'client' client.id %}"
@@ -96,9 +106,6 @@
                                     {% endfor %}
                                     </tbody>
                                 </table>
-                                <div class="pagination pull-right">
-
-                                </div>
                             </div>
 
                         </div>
@@ -150,18 +157,22 @@
         function ajax(btn) {
             axios.post(btn.data('url')
             ).then(function (response) {
+                let data = response.data
+                btn.parents('.project-actions').prev().text(data.version)
                 console.log(response.data)
+                btn.removeClass('deploy').addClass('re-deploy').find('span').text('重新部署')
+                alert('部署成功', 'success')
             }).catch(function (error) {
                 alert('部署失败，请稍后重试', 'error')
             })
         }
-        $('.re-deploy').on('click', function () {
+
+        $('#deploy-box').on('click', '.re-deploy', function () {
             let btn = $(this)
             swalert('确定要重新部署吗？', 'warning', function () {
                 ajax(btn)
             })
-        })
-        $('.deploy').on('click', function () {
+        }).on('click', '.deploy', function () {
             ajax($(this))
         })
     })

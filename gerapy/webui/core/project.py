@@ -1,5 +1,5 @@
-from requests.exceptions import InvalidURL
 from .job import Job
+from requests.exceptions import ConnectionError, InvalidURL
 
 
 class Project():
@@ -21,3 +21,8 @@ class Project():
     @property
     def length(self):
         return len(self.jobs())
+
+
+    @property
+    def version(self, id):
+        return 1
