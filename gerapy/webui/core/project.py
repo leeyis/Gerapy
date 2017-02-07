@@ -11,7 +11,6 @@ class Project():
     def jobs(self):
         try:
             jobs = self.scrapyd.list_jobs(self.name)
-            print(jobs)
             statuses = ['running', 'pending', 'finished']
             for status in statuses:
                 for job in jobs[status]:

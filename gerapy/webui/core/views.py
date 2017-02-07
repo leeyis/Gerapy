@@ -58,9 +58,18 @@ def project_create(request):
 
 def project_deploy(request, id):
     project = Project.objects.get(id=id)
+    clients = Client.objects.order_by('-id')
     egg = get_egg_info(project)
+    for client in clients:
+        projects = client.projects
+        if project.name in [project.name for project in projects]:
+            client.deployed = True
+        else:
+            client.deployed = False
+        client.connection = client.status
     return render(request, 'project/deploy.html', {
         'project': project,
+        'clients': clients,
         'egg': egg
     })
 

@@ -34,12 +34,14 @@ class Client(Model):
         except (ConnectionError, InvalidURL):
             return {
                 'class': 'danger',
-                'text': '连接错误'
+                'text': '连接错误',
+                'symbol': 0
             }
         else:
             return {
                 'class': 'primary',
-                'text': '运行正常'
+                'text': '运行正常',
+                'symbol': 1
             }
 
     @property
