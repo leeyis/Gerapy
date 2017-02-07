@@ -45,14 +45,20 @@
                             <div class="col-sm-12">
                                 <div class="form-group form-group-sm">
                                     <div class="col-sm-12">
-                                        <p>项目名称</p>
+                                        <p>
+                                            <i class="fa fa-folder-o"></i>
+                                            项目名称
+                                        </p>
                                         <input type="text" class="form-control" name="name" placeholder="主机名"
                                                value="{{ project.name }}">
                                     </div>
                                 </div>
                                 <div class="form-group form-group-sm">
                                     <div class="col-sm-12">
-                                        <p>项目描述</p>
+                                        <p>
+                                            <i class="fa fa-hdd-o"></i>
+                                            项目描述
+                                        </p>
                                         <textarea class="form-control" name="description" placeholder="描述">{{ project.description }}</textarea>
                                     </div>
                                 </div>
@@ -61,18 +67,32 @@
                     </div>
                 </form>
             </div>
-            <div class="ibox">
+            <div class="ibox" id="pack-box">
                 <div class="ibox-title">
                     <h5>打包生成</h5>
+                    <div class="ibox-tools">
+                        <input type="button" class="btn btn-primary btn-xs" :value="button" @click="pack">
+                    </div>
                 </div>
                 <div class="ibox-content">
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group form-group-sm">
-                                <div class="col-sm-12 text-center">
-                                    <input type="button" class="btn btn-primary btn-sm" id="pack" value="打包"
-                                           data-url="{% url 'project_pack' project.id %}">
-                                </div>
+                                <p class="text-left">
+                                    <i class="fa fa-cube"></i>
+                                    当前包名称
+                                </p>
+                                <p>
+                                    ${ name }
+                                </p>
+                                <p>
+                                    <i class="fa fa-clock-o"></i>
+                                    打包时间
+                                </p>
+                                <p>
+                                    ${ update_time }
+                                </p>
+
                             </div>
                         </div>
                     </div>
@@ -163,7 +183,6 @@
 <script src="{% static '/js/codemirror.mode.js' %}"></script>
 <script>
     $(function () {
-        console.log('sdfsdf');
         let config = {
             lineNumbers: true,
             matchBrackets: true,
@@ -178,17 +197,44 @@
         items.setSize('100%', '200px')
         let pipelines = CodeMirror.fromTextArea(document.getElementById("pipelines"), config)
         pipelines.setSize('100%', '200px')
-        $('#pack').on('click', function () {
-            $.ajax({
-                method: 'post',
-                url: $(this).data('url'),
-                success: function (data) {
-                    if (data) {
-                        alert('生成成功!', 'success')
-                    }
-                }
-            })
-        })
     });
+
+    new Vue({
+        el: '#pack-box',
+        data: {
+            url: '{% url "project_pack" project.id %}',
+            name: '{{ egg.name }}' || '尚未打包, 点击生成egg',
+            packed: '{{ egg.name }}' ? true : false,
+            update_time: '{{ egg.update_time }}'
+        },
+        computed: {
+            button(){
+                return this.packed ? '重新打包' : '打包'
+            }
+        },
+        delimiters: ['${', '}'],
+        methods: {
+            pack() {
+                if (this.packed) {
+                    swalert('确定要重新打包吗', 'warning', function () {
+                        this.ajax()
+                    }.bind(this))
+                } else {
+                    this.ajax()
+                }
+            },
+            ajax() {
+                axios.post(this.url
+                ).then(function (response) {
+                    this.packed = true
+                    alert('打包成功', 'success')
+                    this.name = response.data.name
+                    this.update_time = response.data.update_time
+                }.bind(this)).catch(function (error) {
+                    alert('打包失败，请重试', 'error')
+                }.bind(this));
+            }
+        }
+    })
 </script>
 {% endblock %}

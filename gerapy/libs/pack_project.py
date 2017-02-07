@@ -50,9 +50,10 @@ def build_egg(project):
 
 def find_egg(path):
     items = os.listdir(path)
-    for names in items:
-        if names.endswith(".egg"):
-            return names
+    for name in items:
+        if name.endswith(".egg"):
+            return name
+    return None
 
 
 def _create_default_setup_py(**kwargs):

@@ -5,7 +5,8 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 
-from gerapy.libs.check_project import check_project
+from gerapy.libs.check_project import check_project, get_egg_info
+from gerapy.libs.date_format import date_format
 from gerapy.libs.start_project import start_project
 from gerapy.libs.pack_project import pack_project
 from .models import Project, Client
@@ -70,8 +71,10 @@ def project(request, id):
 
 def project_edit(request, id):
     project = Project.objects.get(id=id)
+    egg = get_egg_info(project)
     return render(request, 'project/edit.html', {
-        'project': project
+        'project': project,
+        'egg': egg
     })
 
 
@@ -79,10 +82,12 @@ def project_pack(request, id):
     project = Project.objects.get(id=id)
     start_project(project)
     egg = pack_project(project)
-    if check_project(project, egg):
+    check_result = check_project(project, egg)
+    if check_result:
         result = {
             'name': egg,
-            'status': '1'
+            'status': '1',
+            'update_time': date_format(check_result)
         }
         return JsonResponse(result)
     return HttpResponse({'status': '0'})
