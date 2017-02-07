@@ -137,7 +137,7 @@
                                         <span class="label label-primary">有效</span>
                                     </td>
                                     <td>{{ version.name }}</td>
-                                    <td>
+                                    <td class="project-actions">
                                         {% if project.id %}
                                         <input type="button" value="删除" data-version="{{ version.name }}"
                                                data-url="{% url 'version_delete' project.id client.id %}"
