@@ -78,11 +78,12 @@ def project_deploy(request, id, client_id):
         })
     elif request.method == 'POST':
         client = Client.objects.get(id=client_id)
-        result, version = deploy_project(project, client)
+        result, deploy_version, egg_version = deploy_project(project, client)
         if result:
             return JsonResponse({
                 'status': '1',
-                'version': version
+                'deploy_version': deploy_version,
+                'egg_version': egg_version
             })
         return JsonResponse({'status': '0'})
 
@@ -109,7 +110,7 @@ def project_pack(request, id):
         result = {
             'name': egg,
             'status': '1',
-            'update_time': date_format(check_result)
+            'version': date_format(check_result)
         }
         return JsonResponse(result)
     return HttpResponse({'status': '0'})

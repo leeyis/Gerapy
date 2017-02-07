@@ -25,10 +25,10 @@
                                 </p>
                                 <p>
                                     <i class="fa fa-clock-o"></i>
-                                    打包时间
+                                    包版本
                                 </p>
                                 <p>
-                                    ${ update_time }
+                                    ${ version }
                                 </p>
 
                             </div>
@@ -122,7 +122,7 @@
             url: '{% url "project_pack" project.id %}',
             name: '{{ egg.name }}' || '尚未打包, 点击生成egg',
             packed: '{{ egg.name }}' ? true : false,
-            update_time: '{{ egg.update_time }}'
+            version: '{{ egg.version }}'
         },
         computed: {
             button(){
@@ -146,7 +146,7 @@
                     this.packed = true
                     alert('打包成功', 'success')
                     this.name = response.data.name
-                    this.update_time = response.data.update_time
+                    this.version = response.data.version
                 }.bind(this)).catch(function (error) {
                     alert('打包失败，请重试', 'error')
                 }.bind(this));
@@ -158,7 +158,7 @@
             axios.post(btn.data('url')
             ).then(function (response) {
                 let data = response.data
-                btn.parents('.project-actions').prev().text(data.version)
+                btn.parents('.project-actions').prev().text(data.deploy_version)
                 console.log(response.data)
                 btn.removeClass('deploy').addClass('re-deploy').find('span').text('重新部署')
                 alert('部署成功', 'success')

@@ -10,6 +10,7 @@ def version(client, project):
     try:
         scrapyd = ScrapydAPI(url)
         versions = scrapyd.list_versions(project)
+        print(versions)
         if (len(versions) > 0):
             return versions[-1]
         return ''

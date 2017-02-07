@@ -5,6 +5,7 @@ import time
 from scrapyd_api import ScrapydAPI
 
 from gerapy.libs.check_project import get_egg_info
+from .date_format import date_format
 
 
 def deploy_project(project, client):
@@ -16,6 +17,7 @@ def deploy_project(project, client):
         egg_file = open(file_path, 'rb')
         url = 'http://{ip}:{port}'.format(ip=client.ip, port=client.port)
         scrapyd = ScrapydAPI(url)
-        version = str(time.time()).replace('.', '_')
-        result = scrapyd.add_version(project.name, version, egg_file.read())
-        return result, version
+        deploy_version = date_format(time.time(), '%Y-%m-%d_%H_%M_%S')
+        egg_version = egg.get('version')
+        result = scrapyd.add_version(project.name, deploy_version, egg_file.read())
+        return result, deploy_version, egg_version
