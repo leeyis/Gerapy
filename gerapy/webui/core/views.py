@@ -8,6 +8,7 @@ from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from scrapyd_api import ScrapydAPI
 from gerapy.libs.check_project import check_project, get_egg_info
 from gerapy.libs.date_format import date_format
+from gerapy.libs.delete_version import delete_version
 from gerapy.libs.deploy_project import deploy_project
 from gerapy.libs.start_project import start_project
 from gerapy.libs.pack_project import pack_project
@@ -97,8 +98,10 @@ def project_edit(request, id):
     elif request.method == 'POST':
         project = Project.objects.filter(id=id)
         data = request.POST.dict()
-        project.update(**data)
-        return HttpResponseRedirect(reverse('project_edit', args=[id]))
+        result = project.update(**data)
+        if result:
+            return JsonResponse({'status': '1'})
+        return JsonResponse({'status': '0'})
 
 
 def project_pack(request, id):
@@ -113,4 +116,13 @@ def project_pack(request, id):
             'version': date_format(check_result)
         }
         return JsonResponse(result)
-    return HttpResponse({'status': '0'})
+    return JsonResponse({'status': '0'})
+
+
+def version_delete(request, project_id, client_id):
+    project = Project.objects.get(id=project_id)
+    client = Client.objects.get(id=client_id)
+    version = request.POST.get('version')
+    if delete_version(project, client, version):
+        return JsonResponse({'status': '1'})
+    return JsonResponse({'status': '0'})

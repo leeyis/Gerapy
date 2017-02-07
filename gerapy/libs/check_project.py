@@ -24,5 +24,5 @@ def get_egg_info(project):
     egg = find_egg(path)
     if egg:
         update_time = os.stat('{path}/{egg}'.format(path=path, egg=egg)).st_ctime
-        return {'version': date_format(update_time), 'name': egg}
+        return {'version': date_format(update_time, '%Y-%m-%d_%H_%M_%S'), 'name': egg}
     return None

@@ -1,3 +1,4 @@
+from .version import Version
 from .job import Job
 from requests.exceptions import ConnectionError, InvalidURL
 
@@ -19,10 +20,26 @@ class Project():
             return []
 
     @property
+    def versions(self):
+        try:
+            versions = self.scrapyd.list_versions(self.name)
+            for version in versions:
+                yield Version(version)
+        except (ConnectionError, InvalidURL):
+            return []
+
+    @property
     def length(self):
         return len(self.jobs())
-
 
     @property
     def version(self, id):
         return 1
+
+    @property
+    def id(self):
+        from .models import Project
+        project = Project.objects.get(name=self.name)
+        if project:
+            return project.id
+        return 0

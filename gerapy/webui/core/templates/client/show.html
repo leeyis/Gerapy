@@ -92,14 +92,15 @@
                         <small>{{ project.jobs.node_name }}</small>
                     </h5>
 
-
                     <div class="ibox-tools">
+
                         <a class="collapse-link">
+                            <span>查看版本</span>
                             <i class="fa fa-chevron-down"></i>
                         </a>
                     </div>
                 </div>
-                <div class="ibox-content none">
+                <div class="ibox-content">
                     <div class="row">
                         <div class="col-sm-12">
                             {% load attr %}
@@ -116,6 +117,40 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="ibox-content none">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <table class="table table-hover m-b-none">
+                                <tbody>
+                                <tr>
+                                    <td>状态</td>
+                                    <td>版本名称</td>
+                                    <td class="text-right">操作</td>
+                                </tr>
+                                {% for version in project.versions %}
+                                <tr>
+                                    <td>
+                                        <span class="label label-primary">有效</span>
+                                    </td>
+                                    <td>{{ version.name }}</td>
+                                    <td>
+                                        {% if project.id %}
+                                        <input type="button" value="删除" data-version="{{ version.name }}"
+                                               data-url="{% url 'version_delete' project.id client.id %}"
+                                               class="btn btn-danger btn-xs delete-version">
+                                        {% else %}
+                                        <input type="button" disabled="disabled" value="非本地项目"
+                                               class="btn btn-danger btn-xs">
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
@@ -125,4 +160,33 @@
         </div>
     </div>
 </div>
+<script>
+    $(function () {
+        $('.delete-version').on('click', function () {
+            let btn = $(this)
+            swalert('确定要删除该版本吗?', 'warning', function () {
+                $.ajax({
+                    method: 'post',
+                    data: {
+                        'version': btn.data('version')
+                    },
+                    url: btn.data('url'),
+                    success: function (data) {
+                        if (data.status == '1') {
+                            btn.closest('tr').remove()
+                            alert('删除成功', 'success')
+                        } else {
+                            alert('删除失败，请稍后重试', 'error')
+                        }
+                    },
+                    error: function () {
+                        alert('删除失败，请稍后重试', 'error')
+                    }
+                })
+            })
+
+
+        })
+    })
+</script>
 {% endblock %}

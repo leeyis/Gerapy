@@ -71,7 +71,7 @@
         </div>
         <div class="col-sm-9">
             <div class="ibox animate">
-                <form class="form-horizontal" action="{% url 'project' project.id %}" method="post">
+                <form class="form-horizontal" action="{% url 'project_edit' project.id %}" method="post">
                     <div class="ibox-title">
                         <h5>Spiders Class</h5>
 
@@ -89,7 +89,7 @@
                 </form>
             </div>
             <div class="ibox animate">
-                <form class="form-horizontal" action="{% url 'project' project.id %}" method="post">
+                <form class="form-horizontal" action="{% url 'project_edit' project.id %}" method="post">
                     <div class="ibox-title">
                         <h5>Settings</h5>
 
@@ -107,7 +107,7 @@
                 </form>
             </div>
             <div class="ibox animate">
-                <form class="form-horizontal" action="{% url 'project' project.id %}" method="post">
+                <form class="form-horizontal" action="{% url 'project_edit' project.id %}" method="post">
                     <div class="ibox-title">
                         <h5>Items Class</h5>
 
@@ -125,7 +125,7 @@
                 </form>
             </div>
             <div class="ibox animate">
-                <form class="form-horizontal" action="{% url 'project' project.id %}" method="post">
+                <form class="form-horizontal" action="{% url 'project_edit' project.id %}" method="post">
                     <div class="ibox-title">
                         <h5>Pipelines Class</h5>
 
@@ -167,6 +167,29 @@
         items.setSize('100%', '200px')
         let pipelines = CodeMirror.fromTextArea(document.getElementById("pipelines"), config)
         pipelines.setSize('100%', '200px')
+        function save(form) {
+            form.ajaxSubmit({
+                success: function (data) {
+                    if (data.status == '1') {
+                        alert('保存成功', 'success')
+                    } else {
+                        alert('保存失败', 'error')
+                    }
+                },
+                error: function () {
+                    alert('保存失败', 'error')
+                }
+            })
+        }
+
+        $('form').submit(function (e) {
+            e.preventDefault();
+            save($(this))
+        })
+        setInterval(function () {
+            save($('form'))
+        }, 60000)
+
     })
 </script>
 {% endblock %}

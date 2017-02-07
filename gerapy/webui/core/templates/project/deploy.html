@@ -59,7 +59,7 @@
                                         <th>主机状态</th>
                                         <th>主机名称</th>
                                         <th>主机IP</th>
-                                        <th>包版本</th>
+                                        <th>部署版本</th>
                                         <th class="text-right">操作</th>
                                     </tr>
                                     {% for client in clients %}
@@ -94,7 +94,9 @@
                                             {% else %}
                                             <a data-url="{% url 'project_deploy' project.id client.id %}"
                                                class="btn btn-primary btn-xs deploy"><i
-                                                    class="fa fa-angle-double-right"></i> 部署 </a>
+                                                    class="fa fa-angle-double-right"></i>
+                                                <span>部署</span>
+                                            </a>
                                             {% endif %}
                                             {% else %}
                                             <a href="{% url 'client' client.id %}"

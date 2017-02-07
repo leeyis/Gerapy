@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^project/(\d+)/edit/$', views.project_edit, name='project_edit'),
     url(r'^project/(\d+)/pack/$', views.project_pack, name='project_pack'),
     url(r'^project/create/$', views.project_create, name='project_create'),
+    url(r'^version/delete/(\d+)/(\d+)/$', views.version_delete, name='version_delete'),
 ]
