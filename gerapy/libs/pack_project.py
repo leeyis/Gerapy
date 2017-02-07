@@ -1,29 +1,4 @@
-import os
-from os import chdir
 from os.path import dirname, abspath
-
-import time
-
-import shutil
-
-
-def deploy_project(project):
-    '''
-     path = dirname(dirname(abspath(__file__)))
-    path = '{path}/storage/{project}/{project}/spiders/'.format(path=path, project=project.name)
-    chdir(path)
-    change_time = os.stat(path + 'spiders.py').st_ctime
-    now_time = time.time()
-    if abs(now_time - change_time) < 2:
-        return True
-    return False
-
-
-    '''
-    egg = build_egg(project)
-    print(egg)
-
-
 import sys
 import os
 import glob
@@ -31,10 +6,19 @@ import tempfile
 from subprocess import check_call
 from scrapy.utils.python import retry_on_eintr
 from scrapy.utils.conf import get_config
+import shutil
+import logging
+
+
+def pack_project(project):
+    egg = build_egg(project)
+    print('Built %(project)s into %(egg)s' % {'egg': egg, 'project': project.name})
+    return egg
+
 
 _SETUP_PY_TEMPLATE = \
-"""
-# Automatically created by: scrapyd-deploy
+    """
+# Automatically created by: gerapy
 
 from setuptools import setup, find_packages
 

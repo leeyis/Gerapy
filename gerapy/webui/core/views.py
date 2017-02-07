@@ -3,11 +3,11 @@ import subprocess
 
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse
+from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 
 from gerapy.libs.check_project import check_project
-from gerapy.libs.create_project import create_project
-from gerapy.libs.deploy_project import deploy_project
+from gerapy.libs.start_project import start_project
+from gerapy.libs.pack_project import pack_project
 from .models import Project, Client
 
 
@@ -77,8 +77,12 @@ def project_edit(request, id):
 
 def project_pack(request, id):
     project = Project.objects.get(id=id)
-    #create_project(project)
-    deploy_project(project)
-    if check_project(project):
-        return HttpResponse('1')
-    return HttpResponse('0')
+    start_project(project)
+    egg = pack_project(project)
+    if check_project(project, egg):
+        result = {
+            'name': egg,
+            'status': '1'
+        }
+        return JsonResponse(result)
+    return HttpResponse({'status': '0'})

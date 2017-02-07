@@ -2,10 +2,10 @@ import os
 from os import chdir
 from os.path import dirname, exists, abspath
 
-from .update_project import update_project
+from .build_project import build_project
 
 
-def create_project(project):
+def start_project(project):
     path = dirname(dirname(abspath(__file__)))
     chdir(path + '/storage')
     result = exists(path + '/storage/' + project.name)
@@ -16,7 +16,7 @@ def create_project(project):
         if not result == 0:
             print('Create Project Failed')
         else:
-            update_project(project)
+            build_project(project)
     else:
         print('Exists')
-        update_project(project)
+        build_project(project)
