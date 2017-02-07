@@ -56,26 +56,26 @@ def project_create(request):
     return HttpResponseRedirect(reverse('projects'))
 
 
-def project(request, id):
+def project_deploy(request, id):
+    project = Project.objects.get(id=id)
+    egg = get_egg_info(project)
+    return render(request, 'project/deploy.html', {
+        'project': project,
+        'egg': egg
+    })
+
+
+def project_edit(request, id):
     if request.method == 'GET':
         project = Project.objects.get(id=id)
-        return render(request, 'project/show.html', {
-            'project': project
+        return render(request, 'project/edit.html', {
+            'project': project,
         })
     elif request.method == 'POST':
         project = Project.objects.filter(id=id)
         data = request.POST.dict()
         project.update(**data)
         return HttpResponseRedirect(reverse('project_edit', args=[id]))
-
-
-def project_edit(request, id):
-    project = Project.objects.get(id=id)
-    egg = get_egg_info(project)
-    return render(request, 'project/edit.html', {
-        'project': project,
-        'egg': egg
-    })
 
 
 def project_pack(request, id):

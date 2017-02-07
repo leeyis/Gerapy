@@ -1,0 +1,102 @@
+{% extends 'public/wrap.html' %}
+
+{% block 'main' %}
+<div class="wrapper wrapper-content">
+    <div class="row animated fadeInDown">
+        <div class="col-sm-3">
+            {% include 'project/info.html' %}
+            <div class="ibox" id="pack-box">
+                <div class="ibox-title">
+                    <h5>打包生成</h5>
+                    <div class="ibox-tools">
+                        <input type="button" class="btn btn-primary btn-xs" :value="button" @click="pack">
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="form-group form-group-sm">
+                                <p class="text-left">
+                                    <i class="fa fa-cube"></i>
+                                    当前包名称
+                                </p>
+                                <p>
+                                    ${ name }
+                                </p>
+                                <p>
+                                    <i class="fa fa-clock-o"></i>
+                                    打包时间
+                                </p>
+                                <p>
+                                    ${ update_time }
+                                </p>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <div class="col-sm-9">
+            <div class="ibox animate">
+                <div class="ibox-title">
+                    <h5>部署状态</h5>
+
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    new Vue({
+        el: '#pack-box',
+        data: {
+            url: '{% url "project_pack" project.id %}',
+            name: '{{ egg.name }}' || '尚未打包, 点击生成egg',
+            packed: '{{ egg.name }}' ? true : false,
+            update_time: '{{ egg.update_time }}'
+        },
+        computed: {
+            button(){
+                return this.packed ? '重新打包' : '打包'
+            }
+        },
+        delimiters: ['${', '}'],
+        methods: {
+            pack() {
+                if (this.packed) {
+                    swalert('确定要重新打包吗', 'warning', function () {
+                        this.ajax()
+                    }.bind(this))
+                } else {
+                    this.ajax()
+                }
+            },
+            ajax() {
+                axios.post(this.url
+                ).then(function (response) {
+                    this.packed = true
+                    alert('打包成功', 'success')
+                    this.name = response.data.name
+                    this.update_time = response.data.update_time
+                }.bind(this)).catch(function (error) {
+                    alert('打包失败，请重试', 'error')
+                }.bind(this));
+            }
+        }
+    })
+</script>
+{% endblock %}

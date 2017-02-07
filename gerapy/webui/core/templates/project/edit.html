@@ -4,6 +4,7 @@
 <div class="wrapper wrapper-content">
     <div class="row animated fadeInDown">
         <div class="col-sm-3">
+            {% include 'project/info.html' %}
             <div class="ibox">
                 <div class="ibox-title">
                     <h5>{{ project.name }}
@@ -32,7 +33,7 @@
                 </div>
             </div>
             <div class="ibox">
-                <form class="form-horizontal" action="{% url 'project' project.id %}" method="post">
+                <form class="form-horizontal" action="{% url 'project_edit' project.id %}" method="post">
 
                     <div class="ibox-title">
                         <h5>基本信息</h5>
@@ -66,37 +67,6 @@
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="ibox" id="pack-box">
-                <div class="ibox-title">
-                    <h5>打包生成</h5>
-                    <div class="ibox-tools">
-                        <input type="button" class="btn btn-primary btn-xs" :value="button" @click="pack">
-                    </div>
-                </div>
-                <div class="ibox-content">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="form-group form-group-sm">
-                                <p class="text-left">
-                                    <i class="fa fa-cube"></i>
-                                    当前包名称
-                                </p>
-                                <p>
-                                    ${ name }
-                                </p>
-                                <p>
-                                    <i class="fa fa-clock-o"></i>
-                                    打包时间
-                                </p>
-                                <p>
-                                    ${ update_time }
-                                </p>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
         <div class="col-sm-9">
@@ -197,44 +167,6 @@
         items.setSize('100%', '200px')
         let pipelines = CodeMirror.fromTextArea(document.getElementById("pipelines"), config)
         pipelines.setSize('100%', '200px')
-    });
-
-    new Vue({
-        el: '#pack-box',
-        data: {
-            url: '{% url "project_pack" project.id %}',
-            name: '{{ egg.name }}' || '尚未打包, 点击生成egg',
-            packed: '{{ egg.name }}' ? true : false,
-            update_time: '{{ egg.update_time }}'
-        },
-        computed: {
-            button(){
-                return this.packed ? '重新打包' : '打包'
-            }
-        },
-        delimiters: ['${', '}'],
-        methods: {
-            pack() {
-                if (this.packed) {
-                    swalert('确定要重新打包吗', 'warning', function () {
-                        this.ajax()
-                    }.bind(this))
-                } else {
-                    this.ajax()
-                }
-            },
-            ajax() {
-                axios.post(this.url
-                ).then(function (response) {
-                    this.packed = true
-                    alert('打包成功', 'success')
-                    this.name = response.data.name
-                    this.update_time = response.data.update_time
-                }.bind(this)).catch(function (error) {
-                    alert('打包失败，请重试', 'error')
-                }.bind(this));
-            }
-        }
     })
 </script>
 {% endblock %}
