@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^project/edit/(\d+)/$', views.project_edit, name='project_edit'),
     url(r'^project/pack/(\d+)/$', views.project_pack, name='project_pack'),
     url(r'^project/create/$', views.project_create, name='project_create'),
+    url(r'^project/jobs/(\d+)/$', views.project_jobs, name='project_jobs'),
     url(r'^version/delete/(\d+)/(\d+)/$', views.version_delete, name='version_delete'),
     url(r'^spider/schedule/(\d+)/$', views.spider_schedule, name='spider_schedule'),
 ]

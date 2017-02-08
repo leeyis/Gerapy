@@ -1,0 +1,19 @@
+{% load attr %}
+<table class="table table-hover m-b-none">
+    <tbody>
+    <tr>
+        <td colspan="4" class="text-center">
+            任务调度
+        </td>
+    </tr>
+    <tr>
+        <td>状态</td>
+        <td>爬虫名称</td>
+        <td>运行时间</td>
+        <td class="text-right">操作</td>
+    </tr>
+    {% for job in project.jobs %}
+    {% include 'client/job.html' %}
+    {% endfor %}
+    </tbody>
+</table>

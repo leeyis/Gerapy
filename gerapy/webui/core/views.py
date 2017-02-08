@@ -1,3 +1,4 @@
+import json
 import os
 import subprocess
 
@@ -10,6 +11,7 @@ from gerapy.libs.check_project import check_project, get_egg_info
 from gerapy.libs.date_format import date_format
 from gerapy.libs.delete_version import delete_version
 from gerapy.libs.deploy_project import deploy_project
+from gerapy.libs.get_scrapyd import get_scrapyd
 from gerapy.libs.shedule_spider import schedule_spider
 from gerapy.libs.start_project import start_project
 from gerapy.libs.pack_project import pack_project
@@ -126,6 +128,18 @@ def project_pack(request, id):
         }
         return JsonResponse(result)
     return JsonResponse({'status': '0'})
+
+
+def project_jobs(request, client_id):
+    from .project import Project
+    project_name = request.POST.get('project_name')
+    client = Client.objects.get(id=client_id)
+    scrapyd = get_scrapyd(client)
+    project = Project(project_name, scrapyd)
+    return render(request, 'client/jobs.html', {
+        'project': project,
+        'client': client
+    })
 
 
 def version_delete(request, project_id, client_id):

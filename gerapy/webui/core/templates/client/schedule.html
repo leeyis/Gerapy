@@ -18,7 +18,7 @@
                 </div>
             </div>
             {% for project in client.projects %}
-            <div class="ibox animate" id="schedule-box">
+            <div class="ibox animate schedule-box" data-project-name="{{ project.name }}">
                 <div class="ibox-title">
 
                     <h5>
@@ -78,37 +78,37 @@
 
                 <div class="ibox-content">
                     <div class="row">
-                        <div class="col-sm-12">
-                            {% load attr %}
-                            <table class="table table-hover m-b-none">
-                                <tbody>
-                                <tr>
-                                    <td colspan="4" class="text-center">
-                                        任务调度
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>状态</td>
-                                    <td>爬虫名称</td>
-                                    <td>运行时间</td>
-                                    <td class="text-right">操作</td>
-                                </tr>
-                                {% for job in project.jobs %}
-                                {% include 'client/job.html' %}
-                                {% endfor %}
-                                </tbody>
-                            </table>
-
+                        <div class="col-sm-12 jobs">
+                            {% include 'client/jobs.html' %}
                         </div>
                     </div>
                 </div>
             </div>
             {% endfor %}
-
         </div>
     </div>
 </div>
 <script>
+
+    function updateScheduleList() {
+        $('.schedule-box').each(function () {
+            let box = $(this)
+            $.ajax({
+                url: '{% url "project_jobs" client.id %}',
+                data: {
+                    project_name: box.data('project-name')
+                },
+                method: 'post',
+                success: function (data) {
+                    box.find('.jobs').html(data)
+                },
+                error: function () {
+                    alert('获取任务失败，请稍后重试', 'error')
+                }
+            })
+        })
+    }
+
     $(function () {
         $('.delete-version').on('click', function () {
             let btn = $(this)
@@ -145,6 +145,7 @@
                 success: function (data) {
                     if (data.status == '1') {
                         alert('启动成功', 'success')
+                        updateScheduleList()
                     } else {
                         alert('启动失败', 'error')
                     }
@@ -154,6 +155,9 @@
                 }
             })
         })
+        setInterval(function () {
+            updateScheduleList()
+        }, 5000);
     })
 
 
