@@ -1,3 +1,4 @@
+from gerapy.webui.core.spider import Spider
 from .version import Version
 from .job import Job
 from requests.exceptions import ConnectionError, InvalidURL
@@ -20,6 +21,16 @@ class Project():
             return []
 
     @property
+    def spiders(self):
+        try:
+            spiders = self.scrapyd.list_spiders(self.name)
+            for spider in spiders:
+                yield Spider(spider)
+        except (ConnectionError, InvalidURL):
+            return []
+
+
+    @property
     def versions(self):
         try:
             versions = self.scrapyd.list_versions(self.name)
@@ -28,13 +39,16 @@ class Project():
         except (ConnectionError, InvalidURL):
             return []
 
+
     @property
     def length(self):
         return len(self.jobs())
 
+
     @property
     def version(self, id):
         return 1
+
 
     @property
     def id(self):
