@@ -179,6 +179,12 @@
             })
         }).on('click', '.job-log', function () {
             let btn = $(this)
+            $('#job-log-content').html('')
+            $('#job-log-refresh').data({
+                job_id: btn.data('job-id'),
+                spider_name: btn.data('spider-name'),
+                project_name: btn.data('project-name')
+            })
             $.ajax({
                 url: '{% url "job_log" client.id %}',
                 data: {
@@ -189,11 +195,36 @@
                 method: 'post',
                 success: function (data) {
                     if (data.status == '1') {
+                        $('#job-log').modal('show')
+                        $('#job-log-content').html(data.content)
+                    } else {
+                        alert('日志获取失败，请稍后再试', 'error')
+                        $('#job-log').modal('hide')
+                    }
+                },
+                error: function () {
+                    alert('日志获取失败，请稍后再试', 'error')
+                }
+            })
+        })
+        $('#job-log-refresh').on('click', function () {
+            let btn = $(this)
+            $.ajax({
+                url: '{% url "job_log" client.id %}',
+                data: {
+                    job_id: btn.data('job-id'),
+                    spider_name: btn.data('spider-name'),
+                    project_name: btn.data('project-name')
+                },
+                method: 'post',
+                success: function (data) {
+                    if (data.status == '1') {
+                        $('#job-log').modal('show')
                         $('#job-log-content').html(data.content)
                     }
                 },
                 error: function () {
-                    alert('获取失败，请稍后再试', 'error')
+                    alert('日志获取失败，请稍后再试', 'error')
                 }
             })
         })

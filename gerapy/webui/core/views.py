@@ -186,6 +186,7 @@ def job_log(request, id):
                project_name=project_name,
                spider_name=spider_name,
                job_id=job_id)
+    print(url)
     response = requests.get(url)
     if response.status_code == 200:
         return JsonResponse({'status': '1', 'content': response.text})
