@@ -27,10 +27,10 @@ def clients(request):
     })
 
 
-def client(request, id):
+def client_edit(request, id):
     if request.method == 'GET':
         client = Client.objects.get(id=id)
-        return render(request, 'client/show.html', {
+        return render(request, 'client/edit.html', {
             'client': client
         })
     elif request.method == 'POST':
