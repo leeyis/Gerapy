@@ -1,0 +1,161 @@
+{% extends 'public/wrap.html' %}
+
+{% block 'main' %}
+<div class="wrapper wrapper-content">
+    <div class="row animated fadeInDown">
+        <div class="col-sm-12">
+            <div class="ibox animate">
+                <div class="ibox-title">
+
+                    {% if client.status.class == 'danger' %}
+                    <h5>连接错误，请检查主机配置</h5>
+                    {% elif client.projects.length == 0 %}
+                    <h5>无项目</h5>
+                    {% else %}
+                    <h5>所有爬虫项目</h5>
+                    {% endif %}
+
+                </div>
+            </div>
+            {% for project in client.projects %}
+            <div class="ibox animate" id="schedule-box">
+                <div class="ibox-title">
+
+                    <h5>
+                        <span class="label label-primary m-r-sm">Project {{ forloop.counter }}</span>
+                        {{ project.name }}
+                        <small>{{ project.jobs.node_name }}</small>
+                    </h5>
+
+                    <div class="ibox-tools">
+
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {% load attr %}
+                            <table class="table table-hover m-b-none">
+                                <tbody>
+                                <tr>
+                                    <td class="text-center" colspan="3">
+                                        爬虫概览
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>状态</td>
+                                    <td>爬虫名称</td>
+                                    <td class="text-right">操作</td>
+                                </tr>
+                                {% for spider in project.spiders %}
+                                <tr>
+                                    <td>
+                                        <span class="label label-primary">
+                                            正常
+                                        </span>
+                                    </td>
+                                    <td>
+                                        {{ spider.name }}
+                                    </td>
+                                    <td class="text-right">
+                                        <a class="label label-primary schedule-spider" data-project="{{ project.name }}"
+                                           data-spider="{{ spider.name }}"
+                                           data-url="{% url 'spider_schedule' client.id %}">
+                                            <i class="fa fa-caret-right"></i>
+                                            运行
+                                        </a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            {% load attr %}
+                            <table class="table table-hover m-b-none">
+                                <tbody>
+                                <tr>
+                                    <td colspan="4" class="text-center">
+                                        任务调度
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>状态</td>
+                                    <td>爬虫名称</td>
+                                    <td>运行时间</td>
+                                    <td class="text-right">操作</td>
+                                </tr>
+                                {% for job in project.jobs %}
+                                {% include 'client/job.html' %}
+                                {% endfor %}
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('.delete-version').on('click', function () {
+            let btn = $(this)
+            swalert('确定要删除该版本吗?', 'warning', function () {
+                $.ajax({
+                    method: 'post',
+                    data: {
+                        'version': btn.data('version')
+                    },
+                    url: btn.data('url'),
+                    success: function (data) {
+                        if (data.status == '1') {
+                            btn.closest('tr').remove()
+                            alert('删除成功', 'success')
+                        } else {
+                            alert('删除失败，请稍后重试', 'error')
+                        }
+                    },
+                    error: function () {
+                        alert('删除失败，请稍后重试', 'error')
+                    }
+                })
+            })
+        })
+        $('.schedule-spider').on('click', function () {
+            let btn = $(this)
+            $.ajax({
+                url: btn.data('url'),
+                data: {
+                    project_name: btn.data('project'),
+                    spider_name: btn.data('spider')
+                },
+                method: 'post',
+                success: function (data) {
+                    if (data.status == '1') {
+                        alert('启动成功', 'success')
+                    } else {
+                        alert('启动失败', 'error')
+                    }
+                },
+                error: function () {
+                    alert('启动失败', 'error')
+                }
+            })
+        })
+    })
+
+
+</script>
+{% endblock %}

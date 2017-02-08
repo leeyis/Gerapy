@@ -31,6 +31,13 @@
                     <div class="project-list">
                         <table class="table table-hover">
                             <tbody>
+                            <tr>
+                                <th>状态</th>
+                                <th>名称</th>
+                                <th>IP</th>
+                                <th>端口</th>
+                                <th class="text-right p-r-md">操作</th>
+                            </tr>
                             {% for client in clients %}
                             <tr>
                                 <td class="project-status">
@@ -48,16 +55,19 @@
                                         {{ client.ip }}
                                     </small>
                                 </td>
-                                <td class="project-people text-left">
+                                <td class="text-left">
                                     <small>
                                         {{ client.port }}
                                     </small>
                                 </td>
                                 <td class="project-actions">
-
                                     <a href="{% url 'client_edit' client.id %}"
+                                       class="btn btn-white btn-xs"><i
+                                            class="fa fa-angle-double-right"></i> 编辑 </a>
+
+                                    <a href="{% url 'client_schedule' client.id %}"
                                        class="btn btn-primary btn-xs"><i
-                                            class="fa fa-angle-double-right"></i> 管理 </a>
+                                            class="fa fa-angle-double-right"></i> 任务 </a>
                                 </td>
                             </tr>
                             {% endfor %}

@@ -10,6 +10,7 @@ from gerapy.libs.check_project import check_project, get_egg_info
 from gerapy.libs.date_format import date_format
 from gerapy.libs.delete_version import delete_version
 from gerapy.libs.deploy_project import deploy_project
+from gerapy.libs.shedule_spider import schedule_spider
 from gerapy.libs.start_project import start_project
 from gerapy.libs.pack_project import pack_project
 from .models import Project, Client
@@ -38,6 +39,14 @@ def client_edit(request, id):
         data = request.POST.dict()
         client.update(**data)
         return HttpResponseRedirect(reverse('client', args=[id]))
+
+
+def client_schedule(request, id):
+    if request.method == 'GET':
+        client = Client.objects.get(id=id)
+        return render(request, 'client/schedule.html', {
+            'client': client
+        })
 
 
 def client_create(request):
@@ -124,5 +133,15 @@ def version_delete(request, project_id, client_id):
     client = Client.objects.get(id=client_id)
     version = request.POST.get('version')
     if delete_version(project, client, version):
+        return JsonResponse({'status': '1'})
+    return JsonResponse({'status': '0'})
+
+
+def spider_schedule(request, id):
+    client = Client.objects.get(id=id)
+    project_name = request.POST.get('project_name')
+    spider_name = request.POST.get('spider_name')
+    result = schedule_spider(client, project_name, spider_name)
+    if result:
         return JsonResponse({'status': '1'})
     return JsonResponse({'status': '0'})
