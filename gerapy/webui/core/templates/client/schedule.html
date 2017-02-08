@@ -133,7 +133,7 @@
                 })
             })
         })
-        $('.schedule-spider').on('click', function () {
+        $('.schedule-box').on('click', '.schedule-spider', function () {
             let btn = $(this)
             $.ajax({
                 url: btn.data('url'),
@@ -154,10 +154,32 @@
                     alert('启动失败', 'error')
                 }
             })
+        }).on('click', '.cancel-job', function () {
+            let btn = $(this)
+            $.ajax({
+                url: '{% url "job_cancel" client.id %}',
+                data: {
+                    job_id: btn.data('job-id'),
+                    project_name: btn.data('project-name')
+                },
+                method: 'post',
+                success: function (data) {
+                    if (data.status == '1') {
+                        alert('取消成功', 'success')
+                    } else {
+                        alert('取消失败，请稍后再试', 'error')
+                    }
+                },
+                error: function () {
+                    alert('取消失败，请稍后再试', 'error')
+                }
+            })
         })
+
+
         setInterval(function () {
             updateScheduleList()
-        }, 5000);
+        }, 5000)
     })
 
 

@@ -7,6 +7,8 @@ from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
 from scrapyd_api import ScrapydAPI
+
+from gerapy.libs.cancel_job import cancel_job
 from gerapy.libs.check_project import check_project, get_egg_info
 from gerapy.libs.date_format import date_format
 from gerapy.libs.delete_version import delete_version
@@ -156,6 +158,16 @@ def spider_schedule(request, id):
     project_name = request.POST.get('project_name')
     spider_name = request.POST.get('spider_name')
     result = schedule_spider(client, project_name, spider_name)
+    if result:
+        return JsonResponse({'status': '1'})
+    return JsonResponse({'status': '0'})
+
+
+def job_cancel(request, id):
+    client = Client.objects.get(id=id)
+    project_name = request.POST.get('project_name')
+    job_id = request.POST.get('job_id')
+    result = cancel_job(client, project_name, job_id)
     if result:
         return JsonResponse({'status': '1'})
     return JsonResponse({'status': '0'})

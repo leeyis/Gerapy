@@ -13,13 +13,20 @@
             {{ job.spider }}
         </small>
     </td>
-    <td class="project-title">
-        <small>
-            {{ job.start_time|slice:'19' }} - {{ job.end_time|slice:'19' }}
-        </small>
+    <td>
+        {{ job.start_time|slice:'19' }}
+    </td>
+    <td>
+        {{ job.end_time|slice:'19' }}
+    </td>
+    <td>
+        {{ job.id }}
     </td>
     <td class="project-actions">
-
+        {% if job.status == 'pending' or job.status == 'running' %}
+            <a class="btn btn-danger btn-xs cancel-job" data-project-name="{{ project.name }}" data-job-id="{{ job.id }}"><i
+                class="fa fa-angle-double-right"></i> 取消 </a>
+        {% endif %}
         <a href=""
            class="btn btn-white btn-xs"><i
                 class="fa fa-angle-double-right"></i> 详情 </a>
