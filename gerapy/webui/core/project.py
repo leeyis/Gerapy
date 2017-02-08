@@ -15,7 +15,7 @@ class Project():
             jobs = self.scrapyd.list_jobs(self.name)
             statuses = ['running', 'pending', 'finished']
             for status in statuses:
-                for job in jobs[status]:
+                for job in jobs[status][::-1]:
                     yield Job(status, job.get('id'), job.get('start_time', ''),
                               job.get('end_time', ''), job.get('spider'), jobs.get('node_name', ''))
         except (ConnectionError, InvalidURL):

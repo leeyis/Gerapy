@@ -27,7 +27,10 @@
         <a class="btn btn-danger btn-xs cancel-job" data-project-name="{{ project.name }}" data-job-id="{{ job.id }}"><i
                 class="fa fa-angle-double-right"></i> 取消 </a>
         {% endif %}
-        <a class="btn btn-white btn-xs job-log" data-project-name="{{ project.name }}" data-spider-name="{{ job.spider }}"
+        {% if job.status == 'finished' or job.status == 'running' %}
+        <a class="btn btn-white btn-xs job-log" data-project-name="{{ project.name }}"
+           data-spider-name="{{ job.spider }}"
            data-job-id="{{ job.id }}"><i class="fa fa-angle-double-right"></i> 日志 </a>
+        {% endif %}
     </td>
 </tr>

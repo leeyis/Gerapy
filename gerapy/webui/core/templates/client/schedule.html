@@ -179,11 +179,12 @@
             })
         }).on('click', '.job-log', function () {
             let btn = $(this)
+            $('#job-log').find('.title span').text(btn.data('job-id'))
             $('#job-log-content').html('')
             $('#job-log-refresh').data({
-                job_id: btn.data('job-id'),
-                spider_name: btn.data('spider-name'),
-                project_name: btn.data('project-name')
+                'job-id': btn.data('job-id'),
+                'spider-name': btn.data('spider-name'),
+                'project-name': btn.data('project-name')
             })
             $.ajax({
                 url: '{% url "job_log" client.id %}',
@@ -222,6 +223,7 @@
                         $('#job-log').modal('show')
                         $('#job-log-content').html(data.content)
                     }
+                    console.log(data)
                 },
                 error: function () {
                     alert('日志获取失败，请稍后再试', 'error')
@@ -232,6 +234,12 @@
         setInterval(function () {
             updateScheduleList()
         }, 5000)
+
+        setInterval(function () {
+            if (!$('#job-log').is(':hidden')) {
+                $('#job-log-refresh').trigger('click')
+            }
+        }, 3000)
     })
 
 
