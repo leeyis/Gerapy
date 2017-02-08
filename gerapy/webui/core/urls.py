@@ -16,4 +16,5 @@ urlpatterns = [
     url(r'^version/delete/(\d+)/(\d+)/$', views.version_delete, name='version_delete'),
     url(r'^spider/schedule/(\d+)/$', views.spider_schedule, name='spider_schedule'),
     url(r'^job/cancel/(\d+)/$', views.job_cancel, name='job_cancel'),
+    url(r'^job/log/(\d+)/$', views.job_log, name='job_log'),
 ]

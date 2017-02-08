@@ -3,6 +3,8 @@ import os
 import subprocess
 
 import time
+
+import requests
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
@@ -170,4 +172,21 @@ def job_cancel(request, id):
     result = cancel_job(client, project_name, job_id)
     if result:
         return JsonResponse({'status': '1'})
+    return JsonResponse({'status': '0'})
+
+
+def job_log(request, id):
+    client = Client.objects.get(id=id)
+    project_name = request.POST.get('project_name')
+    spider_name = request.POST.get('spider_name')
+    job_id = request.POST.get('job_id')
+    # http://localhost:6800/logs/quotesbot/toscrape-css/472499baede711e6befaa0999b0d6843.log
+    url = 'http://{ip}:{port}/logs/{project_name}/{spider_name}/{job_id}.log'. \
+        format(ip=client.ip, port=client.port,
+               project_name=project_name,
+               spider_name=spider_name,
+               job_id=job_id)
+    response = requests.get(url)
+    if response.status_code == 200:
+        return JsonResponse({'status': '1', 'content': response.text})
     return JsonResponse({'status': '0'})

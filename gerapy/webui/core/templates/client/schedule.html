@@ -88,6 +88,9 @@
         </div>
     </div>
 </div>
+
+{% include 'client/log.html' %}
+
 <script>
 
     function updateScheduleList() {
@@ -174,8 +177,26 @@
                     alert('取消失败，请稍后再试', 'error')
                 }
             })
+        }).on('click', '.job-log', function () {
+            let btn = $(this)
+            $.ajax({
+                url: '{% url "job_log" client.id %}',
+                data: {
+                    job_id: btn.data('job-id'),
+                    spider_name: btn.data('spider-name'),
+                    project_name: btn.data('project-name')
+                },
+                method: 'post',
+                success: function (data) {
+                    if (data.status == '1') {
+                        $('#job-log-content').html(data.content)
+                    }
+                },
+                error: function () {
+                    alert('获取失败，请稍后再试', 'error')
+                }
+            })
         })
-
 
         setInterval(function () {
             updateScheduleList()

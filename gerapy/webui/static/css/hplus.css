@@ -7362,3 +7362,15 @@ body.skin-3 {
 #content-main {
     overflow-y: auto;
 }
+
+#job-log-content {
+    font-size: 12px;
+    line-height: 1.5;
+    padding-top: 0;
+    background: none;
+    border: none;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    height: 300px;
+    overflow-y: auto;
+}

@@ -13,7 +13,6 @@ class Project():
     def jobs(self):
         try:
             jobs = self.scrapyd.list_jobs(self.name)
-            print(jobs)
             statuses = ['running', 'pending', 'finished']
             for status in statuses:
                 for job in jobs[status]:
@@ -26,7 +25,6 @@ class Project():
     def spiders(self):
         try:
             spiders = self.scrapyd.list_spiders(self.name)
-            print(spiders)
             for spider in spiders:
                 print(spider)
                 yield Spider(spider)
