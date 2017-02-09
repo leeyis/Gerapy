@@ -1,4 +1,4 @@
 /.idea
 gerapy.cfg
 *.pyc
-.gitignore
+!.gitignore
