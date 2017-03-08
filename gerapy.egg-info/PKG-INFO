@@ -1,10 +1,11 @@
 Metadata-Version: 1.0
 Name: gerapy
-Version: 0.6
+Version: 0.6.3
 Summary: distributed crawler
 Home-page: gerapy.com
 Author: germey
 Author-email: UNKNOWN
 License: MIT
 Description: UNKNOWN
+Keywords: gerapy
 Platform: UNKNOWN

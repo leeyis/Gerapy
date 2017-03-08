@@ -4,7 +4,10 @@ gerapy/settings.py
 gerapy.egg-info/PKG-INFO
 gerapy.egg-info/SOURCES.txt
 gerapy.egg-info/dependency_links.txt
+gerapy.egg-info/entry_points.txt
+gerapy.egg-info/requires.txt
 gerapy.egg-info/top_level.txt
+gerapy/cmd/__init__.py
 gerapy/items/__init__.py
 gerapy/libs/__init__.py
 gerapy/libs/build_project.py
