@@ -1,5 +1,4 @@
 /.idea
-gerapy/gerapy.cfg
 *.pyc
 !.gitignore
 /build

@@ -5,10 +5,11 @@ from requests.exceptions import ConnectionError, InvalidURL
 
 class Project(Model):
     name = CharField(max_length=255, default=None)
-    description = CharField(max_length=255, default=None, blank=True)
+    description = CharField(max_length=255, default='', blank=True)
     spiders = TextField(default='', blank=True)
     settings = TextField(default='', blank=True)
     items = TextField(default='', blank=True)
+    middlewares = TextField(default='', blank=True)
     pipelines = TextField(default='', blank=True)
     created_at = DateTimeField(auto_now_add=True)
     updated_at = DateTimeField(auto_now=True)
@@ -31,7 +32,7 @@ class Client(Model):
     def status(self):
         try:
             self.scrapyd.list_projects()
-        except (ConnectionError, InvalidURL):
+        except (ConnectionError, InvalidURL, UnicodeError):
             return {
                 'class': 'danger',
                 'text': '连接错误',

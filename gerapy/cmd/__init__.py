@@ -9,13 +9,6 @@ from os import chdir
 import gerapy
 
 
-def usage():
-    print('gerapy usage:')
-    print('web: run webui')
-    print('-h, --help: get help message')
-    print('-v, --version: get version of gerapy')
-
-
 def version():
     print(gerapy.version())
 
