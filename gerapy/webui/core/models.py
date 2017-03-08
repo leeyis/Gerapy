@@ -50,7 +50,7 @@ class Client(Model):
         from .project import Project
         try:
             projects = self.scrapyd.list_projects()
-        except (ConnectionError, InvalidURL):
+        except (ConnectionError, InvalidURL, UnicodeError):
             return []
         else:
             for project in projects:

@@ -7,15 +7,14 @@ import time
 import requests
 from django.shortcuts import render
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, HttpResponse, JsonResponse
-from scrapyd_api import ScrapydAPI
-
+from django.http import HttpResponseRedirect, JsonResponse
 from gerapy.libs.cancel_job import cancel_job
 from gerapy.libs.check_project import check_project, get_egg_info
 from gerapy.libs.date_format import date_format
 from gerapy.libs.delete_version import delete_version
 from gerapy.libs.deploy_project import deploy_project
 from gerapy.libs.get_scrapyd import get_scrapyd
+from gerapy.libs.get_content import get_settings, get_middlewares, get_items, get_pipelines
 from gerapy.libs.shedule_spider import schedule_spider
 from gerapy.libs.start_project import start_project
 from gerapy.libs.pack_project import pack_project
@@ -23,7 +22,6 @@ from .models import Project, Client
 
 
 def index(request):
-    latest_question_list = Project.objects.all()
     return render(request, 'index.html')
 
 
@@ -107,6 +105,11 @@ def project_deploy(request, id, client_id):
 def project_edit(request, id):
     if request.method == 'GET':
         project = Project.objects.get(id=id)
+        project.settings = get_settings() if not project.settings else project.settings
+        project.middlewares = get_middlewares() if not project.middlewares else project.middlewares
+        project.items = get_items() if not project.items else project.items
+        project.pipelines = get_pipelines() if not project.pipelines else project.pipelines
+        project.save()
         return render(request, 'project/edit.html', {
             'project': project,
         })
@@ -180,7 +183,6 @@ def job_log(request, id):
     project_name = request.POST.get('project_name')
     spider_name = request.POST.get('spider_name')
     job_id = request.POST.get('job_id')
-    # http://localhost:6800/logs/quotesbot/toscrape-css/472499baede711e6befaa0999b0d6843.log
     url = 'http://{ip}:{port}/logs/{project_name}/{spider_name}/{job_id}.log'. \
         format(ip=client.ip, port=client.port,
                project_name=project_name,

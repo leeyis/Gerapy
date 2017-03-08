@@ -9,6 +9,7 @@ gerapy.egg-info/requires.txt
 gerapy.egg-info/top_level.txt
 gerapy/cmd/__init__.py
 gerapy/items/__init__.py
+gerapy/items/template.py
 gerapy/libs/__init__.py
 gerapy/libs/build_project.py
 gerapy/libs/cancel_job.py
@@ -17,14 +18,18 @@ gerapy/libs/config_parser.py
 gerapy/libs/date_format.py
 gerapy/libs/delete_version.py
 gerapy/libs/deploy_project.py
+gerapy/libs/get_content.py
 gerapy/libs/get_scrapyd.py
 gerapy/libs/pack_project.py
 gerapy/libs/shedule_spider.py
 gerapy/libs/start_project.py
 gerapy/middlewares/__init__.py
+gerapy/middlewares/template.py
 gerapy/mongodb/__init__.py
 gerapy/mongodb/connection.py
 gerapy/mongodb/pipelines.py
+gerapy/pipelines/__init__.py
+gerapy/pipelines/template.py
 gerapy/redis/__init__.py
 gerapy/redis/connection.py
 gerapy/redis/dupefilter.py
@@ -51,6 +56,8 @@ gerapy/webui/core/migrations/0002_auto_20170205_1345.py
 gerapy/webui/core/migrations/0003_auto_20170205_1355.py
 gerapy/webui/core/migrations/0004_project_description.py
 gerapy/webui/core/migrations/0005_auto_20170205_1605.py
+gerapy/webui/core/migrations/0006_auto_20170308_2155.py
+gerapy/webui/core/migrations/0007_project_middlewares.py
 gerapy/webui/core/migrations/__init__.py
 gerapy/webui/core/templatetags/__init__.py
 gerapy/webui/core/templatetags/attr.py

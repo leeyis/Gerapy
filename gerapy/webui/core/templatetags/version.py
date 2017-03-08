@@ -13,7 +13,7 @@ def version(client, project):
         if (len(versions) > 0):
             return versions[-1]
         return ''
-    except (ConnectionError, InvalidURL):
+    except (ConnectionError, InvalidURL, UnicodeError):
         return ''
 
 

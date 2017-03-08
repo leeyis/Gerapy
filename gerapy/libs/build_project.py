@@ -16,6 +16,8 @@ def build_project(project):
     return True
 
 
+
+
 def build_cfg(path, project):
     content = '''
 [settings]
@@ -37,7 +39,13 @@ def build_pipelines(path, project):
 
 
 def build_settings(path, project):
-    build_file(path, 'settings.py', project.settings)
+    settings ='''
+BOT_NAME = '{name}'
+SPIDER_MODULES = ['{name}.spiders']
+NEWSPIDER_MODULE = '{name}.spiders'
+'''.format(name=project.name)
+    settings = project.settings + settings
+    build_file(path, 'settings.py', settings)
 
 
 def build_spiders(path, project):

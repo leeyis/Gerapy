@@ -18,7 +18,7 @@ class Project():
                 for job in jobs[status][::-1]:
                     yield Job(status, job.get('id'), job.get('start_time', ''),
                               job.get('end_time', ''), job.get('spider'), jobs.get('node_name', ''))
-        except (ConnectionError, InvalidURL):
+        except (ConnectionError, InvalidURL, UnicodeError):
             return []
 
     @property
@@ -28,7 +28,7 @@ class Project():
             for spider in spiders:
                 print(spider)
                 yield Spider(spider)
-        except (ConnectionError, InvalidURL):
+        except (ConnectionError, InvalidURL, UnicodeError):
             return []
 
     @property
@@ -37,7 +37,7 @@ class Project():
             versions = self.scrapyd.list_versions(self.name)
             for version in versions:
                 yield Version(version)
-        except (ConnectionError, InvalidURL):
+        except (ConnectionError, InvalidURL, UnicodeError):
             return []
 
     @property

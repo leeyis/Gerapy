@@ -21,8 +21,11 @@ def check_project(project, file):
 def get_egg_info(project):
     path = dirname(dirname(abspath(__file__)))
     path = '{path}/storage/{project}/'.format(path=path, project=project.name)
-    egg = find_egg(path)
-    if egg:
-        update_time = os.stat('{path}/{egg}'.format(path=path, egg=egg)).st_ctime
-        return {'version': date_format(update_time, '%Y-%m-%d_%H_%M_%S'), 'name': egg}
-    return None
+    try:
+        egg = find_egg(path)
+        if egg:
+            update_time = os.stat('{path}/{egg}'.format(path=path, egg=egg)).st_ctime
+            return {'version': date_format(update_time, '%Y-%m-%d_%H_%M_%S'), 'name': egg}
+        return None
+    except FileNotFoundError:
+        return None
