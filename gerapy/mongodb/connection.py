@@ -8,7 +8,7 @@ MONGODB_SHEET = 'sheet'
 
 def from_settings(settings):
     host = settings.get('MONGODB_HOST', MONGODB_HOST)
-    port = settings.get('MONGODB_PORT', MONGODB_PORT)
+    port = int(settings.get('MONGODB_PORT', MONGODB_PORT))
     password = settings.get('MONGODB_PASSWORD', MONGODB_PASSWORD)
     db = settings.get('MONGODB_DATABASE', MONGODB_DATABASE)
     sheet = settings.get('MONGODB_SHEET', MONGODB_SHEET)
