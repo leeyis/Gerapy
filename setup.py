@@ -26,7 +26,11 @@ setup(
     entry_points={
         'console_scripts': ['gerapy = gerapy.cmd:main']
     },
-    data_files=[
-        ('gerapy', ['gerapy/setup.cfg'])
-    ]
+    package_data={
+        'gerapy': [
+            'setup.cfg',
+            'webui/static/**/*.*',
+            'webui/core/templates/**/*.*'
+        ],
+    },
 )

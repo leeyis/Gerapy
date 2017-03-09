@@ -7,7 +7,7 @@ def get_package_path():
 
 
 def get_run_path():
-    return os.getcwd()
+    return os.environ.get('DJANGO_RUN_PATH')
 
 
 if __name__ == '__main__':
