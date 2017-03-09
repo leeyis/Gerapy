@@ -1,3 +1,0 @@
-[console_scripts]
-gerapy = gerapy.cmd:main
-
