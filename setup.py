@@ -27,6 +27,6 @@ setup(
         'console_scripts': ['gerapy = gerapy.cmd:main']
     },
     data_files=[
-        ('gerapy', ['gerapy/gerapy.cfg'])
+        ('gerapy', ['gerapy/setup.cfg'])
     ]
 )

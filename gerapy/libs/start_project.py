@@ -2,11 +2,12 @@ import os
 from os import chdir
 from os.path import dirname, exists, abspath
 
+from gerapy.libs.get_path import get_run_path
 from .build_project import build_project
 
 
 def start_project(project):
-    path = dirname(dirname(abspath(__file__)))
+    path = get_run_path()
     chdir(path + '/storage')
     result = exists(path + '/storage/' + project.name)
     if not result:

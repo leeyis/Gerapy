@@ -1,12 +1,12 @@
 import os
-from os.path import dirname, abspath
 import time
+from gerapy.libs.get_path import get_run_path
 from .date_format import date_format
 from .pack_project import find_egg
 
 
 def check_project(project, file):
-    path = dirname(dirname(abspath(__file__)))
+    path = get_run_path()
     target = '{path}/storage/{project}/{file}'.format(path=path, project=project.name, file=file)
     try:
         update_time = os.stat(target).st_ctime
@@ -19,7 +19,7 @@ def check_project(project, file):
 
 
 def get_egg_info(project):
-    path = dirname(dirname(abspath(__file__)))
+    path = get_run_path()
     path = '{path}/storage/{project}/'.format(path=path, project=project.name)
     try:
         egg = find_egg(path)

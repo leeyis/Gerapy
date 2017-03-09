@@ -1,6 +1,8 @@
 from os.path import dirname, abspath
 
-path = dirname(dirname(abspath(__file__)))
+from gerapy.libs.get_path import get_package_path
+
+path = get_package_path()
 
 
 def get_settings():

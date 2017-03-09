@@ -6,11 +6,12 @@ from scrapyd_api import ScrapydAPI
 from requests.exceptions import ConnectionError, InvalidURL
 
 from gerapy.libs.check_project import get_egg_info
+from gerapy.libs.get_path import get_run_path
 from .date_format import date_format
 
 
 def deploy_project(project, client):
-    path = dirname(dirname(abspath(__file__)))
+    path = get_run_path()
     path = '{path}/storage/{project}/'.format(path=path, project=project.name)
     egg = get_egg_info(project)
     if egg:

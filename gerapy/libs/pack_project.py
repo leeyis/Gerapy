@@ -9,6 +9,8 @@ from scrapy.utils.conf import get_config
 import shutil
 import logging
 
+from gerapy.libs.get_path import get_run_path
+
 
 def pack_project(project):
     egg = build_egg(project)
@@ -28,7 +30,7 @@ setup(
 
 
 def build_egg(project):
-    path = dirname(dirname(abspath(__file__)))
+    path = get_run_path()
     path = '{path}/storage/{project}/'.format(path=path, project=project.name)
     os.chdir(path)
     settings = get_config().get('settings', 'default')

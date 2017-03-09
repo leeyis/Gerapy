@@ -4,6 +4,7 @@ import sys
 
 if __name__ == "__main__":
     os.environ.setdefault("DJANGO_SETTINGS_MODULE", "webui.settings")
+    os.environ.setdefault("DJANGO_RUN_PATH", sys.argv[1])
     try:
         from django.core.management import execute_from_command_line
     except ImportError:
@@ -19,4 +20,6 @@ if __name__ == "__main__":
                 "forget to activate a virtual environment?"
             )
         raise
-    execute_from_command_line(sys.argv)
+    args = sys.argv
+    if os.environ.get('DJANGO_RUN_PATH') in args: args.remove(os.environ.get('DJANGO_RUN_PATH'))
+    execute_from_command_line(args)

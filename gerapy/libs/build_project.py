@@ -1,9 +1,9 @@
 from os import chdir
-from os.path import dirname, abspath
+from gerapy.libs.get_path import get_run_path
 
 
 def build_project(project):
-    path = dirname(dirname(abspath(__file__)))
+    path = get_run_path()
     path = '{path}/storage/{project}/{project}'.format(path=path, project=project.name)
     try:
         build_items(path, project)
@@ -14,8 +14,6 @@ def build_project(project):
     except IOError:
         return False
     return True
-
-
 
 
 def build_cfg(path, project):

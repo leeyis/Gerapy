@@ -19,8 +19,10 @@ gerapy/libs/date_format.py
 gerapy/libs/delete_version.py
 gerapy/libs/deploy_project.py
 gerapy/libs/get_content.py
+gerapy/libs/get_path.py
 gerapy/libs/get_scrapyd.py
 gerapy/libs/pack_project.py
+gerapy/libs/project_parser.py
 gerapy/libs/shedule_spider.py
 gerapy/libs/start_project.py
 gerapy/middlewares/__init__.py
