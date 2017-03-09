@@ -20,11 +20,17 @@ def run(args):
 
 
 def create(args):
-    os.mkdir(args)
-    os.chdir(args)
-    with open('gerapy.cfg', 'w') as f:
-        f.write(get_content('/gerapy.cfg'))
-        f.close()
+    try:
+        os.mkdir(args)
+        os.chdir(args)
+        with open('gerapy.cfg', 'w') as f:
+            f.write(get_content('/gerapy.cfg'))
+            f.close()
+    except Exception:
+        print('create project failed')
+        return False
+    print('create', args, 'successfully')
+    return True
 
 
 def main():
@@ -33,7 +39,6 @@ def main():
     parser.add_option('-r', '--run', action='store_true', help='run webui', default='')
     parser.add_option('-c', '--create', action='store_true', help='create project', default='')
     options, args = parser.parse_args(sys.argv)
-    print(options, args)
     if options.version:
         version()
     if options.run:
