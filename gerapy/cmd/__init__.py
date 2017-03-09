@@ -1,11 +1,8 @@
-import getopt
 import os
 import sys
 from os.path import dirname, abspath
 from optparse import OptionParser
-
 from os import chdir
-
 import gerapy
 from gerapy.libs.get_content import get_content
 
@@ -16,7 +13,6 @@ def version():
 
 def run(args):
     execute_path = os.getcwd()
-    print(execute_path)
     path = dirname(dirname(abspath(__file__)))
     chdir(path + '/webui')
     command = 'python3 manage.py ' + execute_path + ' runserver ' + args

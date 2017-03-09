@@ -20,7 +20,6 @@ sys.path.append(os.path.dirname(os.path.dirname(BASE_DIR)))
 
 from gerapy.libs.project_parser import config, path
 
-print(path())
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
