@@ -11,6 +11,7 @@ class Project(Model):
     items = TextField(default='', blank=True)
     middlewares = TextField(default='', blank=True)
     pipelines = TextField(default='', blank=True)
+    tools = TextField(default='', blank=True)
     created_at = DateTimeField(auto_now_add=True)
     updated_at = DateTimeField(auto_now=True)
 

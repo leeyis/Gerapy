@@ -160,10 +160,14 @@
             axios.post(btn.data('url')
             ).then(function (response) {
                 let data = response.data
-                btn.parents('.project-actions').prev().text(data.deploy_version)
-                console.log(response.data)
-                btn.removeClass('deploy').addClass('re-deploy').find('span').text('重新部署')
-                alert('部署成功', 'success')
+                if (data.status == '1') {
+                    btn.parents('.project-actions').prev().text(data.deploy_version)
+                    console.log(response.data)
+                    btn.removeClass('deploy').addClass('re-deploy').find('span').text('重新部署')
+                    alert('部署成功', 'success')
+                } else {
+                    alert('部署失败，请检查打包是否成功', 'error')
+                }
             }).catch(function (error) {
                 alert('部署失败，请稍后重试', 'error')
             })

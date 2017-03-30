@@ -30,6 +30,7 @@ setup(
         'gerapy': [
             'setup.cfg',
             'webui/static/**/*.*',
+            'webui/core/templates/*.*',
             'webui/core/templates/**/*.*'
         ],
     },

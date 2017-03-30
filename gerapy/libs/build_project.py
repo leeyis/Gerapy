@@ -8,6 +8,7 @@ def build_project(project):
     try:
         build_items(path, project)
         build_pipelines(path, project)
+        build_tools(path, project)
         build_settings(path, project)
         build_spiders(path, project)
         build_cfg(path, project)
@@ -35,6 +36,8 @@ def build_items(path, project):
 def build_pipelines(path, project):
     build_file(path, 'pipelines.py', project.pipelines)
 
+def build_tools(path, project):
+    build_file(path, 'tools.py', project.tools)
 
 def build_settings(path, project):
     settings ='''

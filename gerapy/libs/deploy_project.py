@@ -26,3 +26,5 @@ def deploy_project(project, client):
             return result, deploy_version, egg_version
         except (ConnectionError, InvalidURL):
             return None, None, None
+    else:
+        return None, None, None

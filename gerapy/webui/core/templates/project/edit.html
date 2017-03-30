@@ -160,6 +160,24 @@
                     </div>
                 </form>
             </div>
+            <div class="ibox animate">
+                <form class="form-horizontal" action="{% url 'project_edit' project.id %}" method="post">
+                    <div class="ibox-title">
+                        <h5>Tools Class</h5>
+
+                        <div class="ibox-tools">
+                            <input type="submit" class="btn btn-primary btn-xs" value="保存">
+                        </div>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <textarea id="tools" name="tools">{{ project.tools }}</textarea>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </div>
@@ -187,6 +205,8 @@
         pipelines.setSize('100%', '200px')
         let middlewares = CodeMirror.fromTextArea(document.getElementById("middlewares"), config)
         middlewares.setSize('100%', '200px')
+        let tools = CodeMirror.fromTextArea(document.getElementById("tools"), config)
+        tools.setSize('100%', '200px')
         function save(form) {
             form.ajaxSubmit({
                 success: function (data) {

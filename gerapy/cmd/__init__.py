@@ -1,47 +1,23 @@
-import os
 import sys
-from os.path import dirname, abspath
 from optparse import OptionParser
-from os import chdir
-import gerapy
-from gerapy.libs.get_content import get_content
-
-
-def version():
-    print(gerapy.version())
-
-
-def run(args):
-    execute_path = os.getcwd()
-    path = dirname(dirname(abspath(__file__)))
-    chdir(path + '/webui')
-    command = 'python3 manage.py ' + execute_path + ' runserver ' + args
-    os.system(command)
-
-
-def create(args):
-    try:
-        os.mkdir(args)
-        os.chdir(args)
-        with open('gerapy.cfg', 'w') as f:
-            f.write(get_content('/gerapy.cfg'))
-            f.close()
-    except Exception:
-        print('create project failed')
-        return False
-    print('create', args, 'successfully')
-    return True
+from gerapy.cmd.create import create
+from gerapy.cmd.server import server
+from gerapy.cmd.version import version
+from gerapy.cmd.migrate import migrate
 
 
 def main():
     parser = OptionParser()
     parser.add_option('-v', '--version', action='store_true', help='show version of gerapy')
-    parser.add_option('-r', '--run', action='store_true', help='run webui', default='')
+    parser.add_option('-s', '--server', action='store_true', help='run webui server', default='')
     parser.add_option('-c', '--create', action='store_true', help='create project', default='')
+    parser.add_option('-m', '--migrate', action='store_true', help='create database and migrate', default='')
     options, args = parser.parse_args(sys.argv)
     if options.version:
         version()
-    if options.run:
-        run(args[1] if len(args) >= 2 else '')
+    if options.server:
+        server(args[1] if len(args) >= 2 else '')
     if options.create:
         create(args[1] if len(args) >= 2 else '')
+    if options.migrate:
+        migrate(args[1] if len(args) >= 2 else '')
